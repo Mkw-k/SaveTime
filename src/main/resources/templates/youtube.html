@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>유튜브 게시판</title>
+  <link rel="stylesheet" href="style.css"> <!-- 스타일시트 연결 -->
+  <style>
+    body {
+      background-color: #f0f0f0; /* 배경색 */
+      font-family: '나눔고딕', sans-serif;
+    }
+
+    header, footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 1em;
+    }
+
+    .video-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 1em;
+    }
+
+    /* 기본 스타일 */
+    .video {
+      width: 100%;
+    }
+
+    /* 미디어 쿼리: 화면 너비가 768px 이상일 때 */
+    @media (min-width: 768px) {
+      .video {
+        width: 50%;
+      }
+    }
+
+    /* 미디어 쿼리: 화면 너비가 1024px 이상일 때 */
+    @media (min-width: 1024px) {
+      .video {
+        width: 30%;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>유튜브 게시판</h1>
+</header>
+<main>
+  <section class="video-list">
+    <article class="video">
+      <h2>영상 제목</h2>
+      <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+      <div id="player-container"></div>
+    </article>
+    <!-- 추가 영상들 -->
+  </section>
+</main>
+<footer>
+  <p>&copy; 2023 유튜브 게시판</p>
+</footer>
+<script>
+  // IFrame Player API 코드 로드
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  // YouTube IFrame Player API 로드가 완료되었을 때 호출되는 함수
+  function onYouTubeIframeAPIReady() {
+    // 동영상 플레이어 생성
+    createPlayers();
+  }
+
+  // 동영상 플레이어 생성 함수
+  function createPlayers() {
+    // 동영상 ID 목록
+    var videoIdList = ['cn9bS6OAWxY', 'opF3gIz7_v4', 'M7lc1UVf-VE']; // 동영상 ID를 여기에 추가하세요.
+
+    // 동영상 플레이어 컨테이너에 HTML 요소 추가
+    var playerContainer = document.getElementById('player-container');
+    for (var i = 0; i < videoIdList.length; i++) {
+      var containerId = 'player' + (i + 1);
+      var playerDiv = document.createElement('div');
+      playerDiv.id = containerId;
+      playerContainer.appendChild(playerDiv);
+    }
+
+    // 각 동영상 플레이어 생성
+    for (var i = 0; i < videoIdList.length; i++) {
+      var containerId = 'player' + (i + 1);
+      createYouTubePlayer(videoIdList[i], containerId);
+    }
+  }
+
+  // 동영상 플레이어를 생성하는 함수
+  function createYouTubePlayer(videoId, containerId) {
+    new YT.Player(containerId, {
+      height: '360',
+      width: '640',
+      videoId: videoId,
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  // 동영상 플레이어의 상태가 준비되었을 때 호출되는 함수
+  function onPlayerReady(event) {
+    //event.target.playVideo();
+  }
+
+  // 동영상 플레이어의 상태가 변경되었을 때 호출되는 함수
+  function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING && !done) {
+      setTimeout(stopVideo, 6000);
+      done = true;
+    }
+  }
+
+  // 동영상 정지 함수
+  function stopVideo() {
+    player.stopVideo();
+  }
+</script>
+<script>
+  // 페이지 로드 시 실행
+  window.onload = function() {
+    // 현재 페이지의 URL에서 해시 값을 가져오기
+    var hash = window.location.hash;
+
+    // 해시 값이 있는 경우에만 실행
+    if (hash) {
+      console.log("Hash value: " + hash);
+
+      // 해시 값에서 파라미터 추출
+      var params = {};
+      hash.substring(1).split("&").forEach(function(item) {
+        var parts = item.split("=");
+        params[parts[0]] = parts[1];
+      });
+
+      // 파라미터 값 출력
+      console.log(params["access_token"]); // Access Token 값 출력
+
+      // Access Token 값으로 YouTube 재생목록 요청
+      var accessToken = params["access_token"];
+
+      // Ajax 요청 보내기
+      $.ajax({
+        url: "/youtube",
+        type: "GET",
+        data: {
+          token: accessToken
+        },
+        success: function(data) {
+          // 데이터를 처리하고 화면에 표시하는 예시
+          var playlists = data.items; // 재생목록 배열
+
+          // 각 재생목록의 제목을 화면에 출력
+          playlists.forEach(function(playlist) {
+            var title = playlist.snippet.title;
+            console.log("Playlist Title:", title);
+            // 여기서 화면에 표시하는 코드 작성
+          });
+        },
+        error: function(xhr, status, error) {
+          console.error("Error:", error);
+        }
+      });
+    }
+  };
+
+
+</script>
+</body>
+</html>
