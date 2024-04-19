@@ -10,7 +10,7 @@ git pull origin master
 echo ">>>Git Pull Activate!!"
 
 # 변경된 어플리케이션 빌드
-./gradlew clean build
+./gradlew clean bootjar
 echo ">>>clean build Activate"
 
 # Spring Boot 어플리케이션 실행
