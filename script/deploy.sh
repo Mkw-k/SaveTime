@@ -13,7 +13,7 @@ echo ">>>Git Pull Activate!!"
 ./gradlew clean bootjar
 echo ">>>clean build Activate"
 
-cd /build/libs
+cd /home/ubuntu/SaveTime/build/libs
 
 # Spring Boot 어플리케이션 실행
 nohup java -Dspring.profiles.active=dev -jar SaveTime-0.0.1-SNAPSHOT.jar &
