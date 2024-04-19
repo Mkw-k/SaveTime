@@ -14,4 +14,4 @@ echo ">>>Git Pull Activate!!"
 echo ">>>clean build Activate"
 
 # Spring Boot 어플리케이션 실행
-java -Dspring.profiles.active=dev -jar build/libs/SaveTime-0.0.1-SNAPSHOT.jar
+nohup java -Dspring.profiles.active=dev -jar build/libs/SaveTime-0.0.1-SNAPSHOT.jar &
