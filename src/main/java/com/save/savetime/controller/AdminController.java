@@ -18,7 +18,7 @@ public class AdminController {
     @GetMapping("/download/{filename}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) throws IOException {
         String basePath = System.getProperty("user.dir"); // 현재 디렉토리 경로를 가져옴
-        Resource resource = new FileSystemResource(basePath + "/spring-log/" + filename);
+        Resource resource = new FileSystemResource(basePath + "/logs/" + filename);
         return ResponseEntity.ok()
                 .contentType(MediaType.TEXT_PLAIN)
                 .header("Content-Disposition", "attachment; filename=\"" + resource.getFilename() + "\"")
