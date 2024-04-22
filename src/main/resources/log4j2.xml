@@ -3,11 +3,11 @@
     <Appenders>
         <!-- 콘솔 -->
         <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{yyyy-MM-dd hh:mm:ss} %5p [%c] [%X{trxId}] %m%n"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd hh:mm:ss} %5p [%c] %m%n"/>
         </Console>
         <!-- 파일 -->
-        <File name="file" fileName="./spring-log/hellodoctor.log" append="false">
-            <PatternLayout pattern="%d %5p [%c] [%X{trxId}] %m%n"/>
+        <File name="file" fileName="./logs/hellodoctor.log" append="false">
+            <PatternLayout pattern="%d %5p [%c] %m%n"/>
         </File>
     </Appenders>
 
