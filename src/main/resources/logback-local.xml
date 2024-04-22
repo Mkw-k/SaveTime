@@ -3,12 +3,12 @@
     <Appenders>
         <!-- 콘솔 -->
         <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{yyyy-MM-dd hh:mm:ss} %5p [%c] %m%n"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd hh:mm:ss} %5p %m%n"/>
         </Console>
         <!-- 파일 -->
-        <File name="file" fileName="./logs/hellodoctor.log" append="false">
-            <PatternLayout pattern="%d %5p [%c] %m%n"/>
-        </File>
+        <!--<File name="file" fileName="./logs/save-time.log" append="false">
+            <PatternLayout pattern="%d %5p %m%n"/>
+        </File>-->
     </Appenders>
 
     <loggers>
