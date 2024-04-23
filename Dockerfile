@@ -12,5 +12,5 @@ CMD ["./gradlew", "clean", "bootjar"]
 COPY build/libs/SaveTime-0.0.1-SNAPSHOT.jar SaveTime-0.0.1-SNAPSHOT.jar
 
 # 빌드된 이미지가 run될 때 실행할 명령어
-ENTRYPOINT ["java","-Dspring.profiles.active=dev","-jar","helper-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-Dspring.profiles.active=dev","-jar","SaveTime-0.0.1-SNAPSHOT.jar"]
 
