@@ -1,29 +1,7 @@
-#!/bin/bash
+# 가동중인 awsstudy 도커 중단 및 삭제
+sudo docker ps -a -q --filter "name=savetime" | grep -q . && docker stop savetime && docker rm -f savetime | true
 
-# 기존 Java 프로세스 중지
-echo "Stopping existing Java process..."
-existing_pid=$(ps -ef | grep "SaveTime-0.0.1-SNAPSHOT.jar" | grep -v grep | awk '{print $2}')
-if [ -n "$existing_pid" ]; then
-    echo "Killing existing process with PID: $existing_pid"
-    kill -9 $existing_pid
-    echo "Existing Java process stopped."
-else
-    echo "No existing Java process found."
-fi
+# 도커 run -d를 붙여야만 백그라운드로 실행이 된다 주의할것!! -d를 안붙이면 포그라운드에서 실행되서 스프링 프로젝트가 계속 보이며 젠킨스가 마무리 되지 못한다
+#docker run -d -p 8080:8080 --name savetime rhauddn111/savetime
+sudo docker run -d --network host --name savetime -p 8080:8080 -t rhauddn111/savetime
 
-# 최신 변경 사항을 가져옴
-echo "Fetching latest changes from Git repository..."
-cd /home/ubuntu/SaveTime
-git pull origin master
-echo "Git pull complete."
-
-# 변경된 어플리케이션 빌드
-echo "Building the application..."
-./gradlew clean bootjar
-echo "Build complete."
-
-# 새로운 프로젝트 실행
-echo "Starting the new Java process..."
-cd /home/ubuntu/SaveTime/build/libs
-nohup java -Dspring.profiles.active=dev -jar SaveTime-0.0.1-SNAPSHOT.jar > /dev/null 2>&1 &
-echo "New Java process started."
