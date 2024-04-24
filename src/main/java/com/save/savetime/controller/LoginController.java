@@ -20,7 +20,6 @@ public class LoginController {
         boolean loginSuccessBool = memberService.afterCertifyAction(request);
 
         if(loginSuccessBool){
-
             return "login_success";
         }else{
             return "main";
@@ -31,9 +30,8 @@ public class LoginController {
 
     @GetMapping({"/login-success"})
     public String loginSuccess(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) throws Exception {
-
         //하디마 유튜브 페이지로 이동
-        return "youtube";
+        return "index";
     }
 
 }

@@ -16,12 +16,7 @@ public class MainController {
 
     @GetMapping("/callback")
     public String handleCallback(HttpServletRequest request) {
-        return "login";
-    }
-
-    @GetMapping("/youtube")
-    public String getYoutube(HttpServletRequest request) {
-        return "youtube";
+        return "index";
     }
 
     @GetMapping("/index")
