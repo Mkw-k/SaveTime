@@ -1,6 +1,6 @@
 package com.save.savetime.security.voter;
 
-import com.save.savetime.service.SecurityResourceService;
+import com.save.savetime.security.service.SecurityResourceService;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;

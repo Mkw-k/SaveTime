@@ -1,6 +1,6 @@
 package com.save.savetime.security.factory;
 
-import com.save.savetime.service.SecurityResourceService;
+import com.save.savetime.security.service.SecurityResourceService;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.util.matcher.RequestMatcher;

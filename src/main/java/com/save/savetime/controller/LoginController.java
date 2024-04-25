@@ -1,6 +1,6 @@
 package com.save.savetime.controller;
 
-import com.save.savetime.service.app.MemberService;
+import com.save.savetime.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

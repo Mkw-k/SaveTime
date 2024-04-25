@@ -1,11 +1,11 @@
-package com.save.savetime.service.app;
+package com.save.savetime.service;
 
 import com.save.savetime.model.dto.UserDto;
 import com.save.savetime.model.entity.Member;
 import com.save.savetime.model.entity.Role;
 import com.save.savetime.repository.LoginRepository;
 import com.save.savetime.repository.RoleRepository;
-import com.save.savetime.service.RoleService;
+import com.save.savetime.security.service.RoleService;
 import com.save.savetime.util.ContextUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

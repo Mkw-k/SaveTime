@@ -11,7 +11,7 @@ public class MainController {
 
     @GetMapping("/")
     public String getMain(){
-        return "login";
+        return "index";
     }
 
     @GetMapping("/callback")

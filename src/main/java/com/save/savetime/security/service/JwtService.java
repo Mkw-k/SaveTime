@@ -1,4 +1,4 @@
-package com.save.savetime.service.common;
+package com.save.savetime.security.service;
 
 /**
  */
