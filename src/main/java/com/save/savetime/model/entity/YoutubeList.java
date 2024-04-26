@@ -1,11 +1,15 @@
 package com.save.savetime.model.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 
 @Entity
+@Table(name = "youtube_list", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"list_id", "channel_id"})
+})
 @Getter
 @Setter
 @EqualsAndHashCode(of = "idx")
@@ -24,6 +28,10 @@ public class YoutubeList extends Audit{
     @Column(name = "list_id")
     private String listId;
 
+    @Column(name = "channel_id")
+    @Comment("해당유저의 채널(유튜브) 아이디")
+    private String channelId;
+
     @Column(name = "owner")
     private String owner;
 
@@ -32,4 +40,7 @@ public class YoutubeList extends Audit{
 
     @Column(name = "thumb_url")
     private String thumbUrl;
+
+    @Column(name = "member_id")
+    private String memberId;
 }

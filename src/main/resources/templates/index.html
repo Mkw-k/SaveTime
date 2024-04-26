@@ -603,6 +603,9 @@
                     // Access Token 값으로 YouTube 재생목록 요청
                     var accessToken = params["access_token"];
 
+                    //토큰 저장
+                    setAccessTokenCookie(accessToken);
+
                     // Ajax 요청 보내기
                     $.ajax({
                         url: "/youtube",
@@ -623,7 +626,7 @@
                                             </div>
                                             <div class="location-details">
                                                 <p>${data[i].listTitle}</p>
-                                                <a href="#" class="location-btn">재생목록 <i class="ti-plus"></i> 으로이동</a>
+                                                <a href="/listing?listId=${data[i].listId.replaceAll('\"', '')}" class="location-btn">재생목록 <i class="ti-plus"></i> 으로이동</a>
                                             </div>
                                         </div>
                                     </div>
@@ -639,11 +642,22 @@
                             $('#youtube_play_list').append(youtubeHtml);
                         },
                         error: function(xhr, status, error) {
-                            console.error("Error:", error);
+                            alert(xhr.responseJSON[0].defaultMessage.split(':')[0]);
                         }
                     });
                 }
             };
+
+            // 쿠키에 액세스 토큰 저장
+            function setAccessTokenCookie(accessToken) {
+                // 쿠키 만료 시간 설정 (예: 1일)
+                var expirationDate = new Date();
+                expirationDate.setDate(expirationDate.getDate() + 1);
+
+                // 쿠키 만들기
+                document.cookie = "access_token=" + accessToken + ";expires=" + expirationDate.toUTCString() + ";path=/";
+            }
+
         </script>
         
     </body>

@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface YoutubeListRepository extends JpaRepository<YoutubeList, Long> {
     List<YoutubeList> findByListIdOrderByYoutubeListUpdateDateDesc(String youtubeListId);
+    YoutubeList findByListIdAndChannelId(String listId, String channelId);
 }

@@ -2,6 +2,7 @@ package com.save.savetime.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,6 +48,12 @@ public class MainController {
     @GetMapping("/elements")
     public String getElements(HttpServletRequest request) {
         return "elements";
+    }
+
+    @GetMapping("/listing")
+    public String getListing(HttpServletRequest request, @RequestParam String listId)
+    {
+        return "listing";
     }
 
     @GetMapping("/listing-details")
