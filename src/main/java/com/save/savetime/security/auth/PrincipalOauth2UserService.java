@@ -6,7 +6,7 @@ import com.save.savetime.model.entity.Member;
 import com.save.savetime.model.entity.Role;
 import com.save.savetime.repository.LoginRepository;
 import com.save.savetime.security.jwt.JwtProvider;
-import com.save.savetime.service.common.JwtService;
+import com.save.savetime.security.service.JwtService;
 import com.save.savetime.util.ContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

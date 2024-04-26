@@ -5,7 +5,7 @@ import com.save.savetime.model.dto.LoginRequestDto;
 import com.save.savetime.model.dto.MemberAccount;
 import com.save.savetime.model.dto.TokenDTO;
 import com.save.savetime.model.dto.UserCommonDTO;
-import com.save.savetime.service.common.JwtService;
+import com.save.savetime.security.service.JwtService;
 import com.save.savetime.util.ContextUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

@@ -1,8 +1,8 @@
-package com.save.savetime.service.impl;
+package com.save.savetime.security.service.impl;
 
 import com.save.savetime.model.entity.Role;
 import com.save.savetime.repository.RoleRepository;
-import com.save.savetime.service.RoleService;
+import com.save.savetime.security.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

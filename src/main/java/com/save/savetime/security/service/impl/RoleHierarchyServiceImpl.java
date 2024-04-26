@@ -1,8 +1,8 @@
-package com.save.savetime.service.impl;
+package com.save.savetime.security.service.impl;
 
 import com.save.savetime.model.entity.RoleHierarchy;
 import com.save.savetime.repository.RoleHierarchyRepository;
-import com.save.savetime.service.RoleHierarchyService;
+import com.save.savetime.security.service.RoleHierarchyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

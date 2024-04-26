@@ -1,6 +1,6 @@
 package com.save.savetime.security.metadatasource;
 
-import com.save.savetime.service.SecurityResourceService;
+import com.save.savetime.security.service.SecurityResourceService;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
