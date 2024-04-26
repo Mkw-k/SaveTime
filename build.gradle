@@ -9,10 +9,14 @@ group = 'com.save'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '17'
+    sourceCompatibility = '11'
 }
 
 configurations {
+    all {
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
     compileOnly {
         extendsFrom annotationProcessor
     }
@@ -49,6 +53,18 @@ dependencies {
     // 타임리프에서 스프링시큐리티의 문법이나 형식을 지원하는 확장팩 라이브러리
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
     implementation group: 'com.auth0', name: 'java-jwt', version: '3.4.1'     // https://mvnrepository.com/artifact/com.auth0/java-jwt
+    implementation 'org.springframework.boot:spring-boot-starter-validation' //Validation
+    implementation 'com.google.guava:guava:31.0.1-jre'
+
+    // Google API Client Library
+    implementation 'com.google.api-client:google-api-client:1.32.1'
+    // Google OAuth Client Library for Java (Java 8)
+    //implementation 'com.google.oauth-client:google-oauth-client-java8:1.32.1'
+    implementation 'com.google.http-client:google-http-client-jackson2:1.32.1'
+    implementation 'com.google.collections:google-collections:1.0'
+    implementation 'com.google.oauth-client:google-oauth-client-jetty:1.20.0'
+    implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.4'
+    implementation 'com.google.apis:google-api-services-youtube:v3-rev182-1.22.0'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
@@ -57,6 +73,8 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     // Spring Security Test 의존성 추가
     testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'ch.qos.logback:logback-classic:1.2.6'
+
 }
 
 tasks.named('test') {

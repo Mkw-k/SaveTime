@@ -1,4 +1,4 @@
-package com.save.savetime.service.impl;
+package com.save.savetime.security.service.impl;
 
 import com.save.savetime.model.dto.ResourcesDto;
 import com.save.savetime.model.entity.Resources;
@@ -8,7 +8,7 @@ import com.save.savetime.repository.ResourcesRepository;
 import com.save.savetime.repository.ResourcesRolesetRepository;
 import com.save.savetime.repository.RoleRepository;
 import com.save.savetime.security.metadatasource.UrlFilterInvocationSecurityMetadatsSource;
-import com.save.savetime.service.ResourcesService;
+import com.save.savetime.security.service.ResourcesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;

@@ -44,7 +44,7 @@ public class OAuth2FailureHandler extends SimpleUrlAuthenticationFailureHandler 
         HttpSession session = request.getSession();
         String passToken = (String) session.getAttribute("passToken");
 
-        //수정_SNS로그인에 실패했을경우(가입이 안되있는경우) 가입절차 실행_230524
+        //수정_SNS로그인에 실패했을경우(가입이 안되있는경우) 가입절차 실행
         //provider : kkoSignUp, naverSignUp
 
         //모드 셋팅
@@ -59,7 +59,6 @@ public class OAuth2FailureHandler extends SimpleUrlAuthenticationFailureHandler 
         String url = "/certify/" + mode;
 
         //signUpSNS 에서 사용하기 위한 세션값 셋팅
-        //TODO 왜 그냥 세션으로는 안되는건지????
         ContextUtil.setAttrToSession("provider", provider);
         ContextUtil.setAttrToSession("id", providerId);
         ContextUtil.setAttrToSession("name", URLDecoder.decode(name, StandardCharsets.UTF_8));

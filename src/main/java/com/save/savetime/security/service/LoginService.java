@@ -1,4 +1,4 @@
-package com.save.savetime.service.app;
+package com.save.savetime.security.service;
 
 import com.save.savetime.model.dto.MemberAccount;
 import com.save.savetime.model.entity.Member;

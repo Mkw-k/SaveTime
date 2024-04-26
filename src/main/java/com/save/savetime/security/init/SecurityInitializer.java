@@ -1,6 +1,6 @@
 package com.save.savetime.security.init;
 
-import com.save.savetime.service.RoleHierarchyService;
+import com.save.savetime.security.service.RoleHierarchyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;

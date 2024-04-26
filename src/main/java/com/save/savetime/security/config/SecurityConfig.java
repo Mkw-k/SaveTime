@@ -13,9 +13,9 @@ import com.save.savetime.security.jwt.JwtAuthorizationFilter;
 import com.save.savetime.security.jwt.JwtLogoutSuccessHandler;
 import com.save.savetime.security.metadatasource.UrlFilterInvocationSecurityMetadatsSource;
 import com.save.savetime.security.voter.IpAddressVoter;
-import com.save.savetime.service.app.LoginService;
-import com.save.savetime.service.SecurityResourceService;
-import com.save.savetime.service.common.JwtService;
+import com.save.savetime.security.service.LoginService;
+import com.save.savetime.security.service.SecurityResourceService;
+import com.save.savetime.security.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -131,7 +131,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
 
             .oauth2Login()  // 간편로그인
-                .loginPage("/app/emailLogin")
+                .loginPage("/Login")
                 .defaultSuccessUrl("/login-success")
                 .failureHandler(oAuth2FailureHandler) // 로그인 실패 핸들러
                 .userInfoEndpoint() // 로그인 성공 후 사용자정보를 가져온다

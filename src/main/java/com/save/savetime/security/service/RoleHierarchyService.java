@@ -1,4 +1,4 @@
-package com.save.savetime.service;
+package com.save.savetime.security.service;
 
 public interface RoleHierarchyService {
 
