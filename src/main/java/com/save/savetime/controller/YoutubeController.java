@@ -6,6 +6,7 @@ import com.save.savetime.repository.YoutubeListRepository;
 import com.save.savetime.service.YoutubeService;
 import com.save.savetime.validator.YoutubeListValidator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@Slf4j
 @RequestMapping("/youtube")
 @RequiredArgsConstructor
 public class YoutubeController {
@@ -44,9 +46,9 @@ public class YoutubeController {
                     return ResponseEntity.badRequest().body(errors);
                 }
             } catch (Exception ex) {
-                ex.printStackTrace();
                 // IOException이 발생한 경우 에러를 생성하여 반환
                 errors.reject("500", "YouTube API 호출 중 오류가 발생했습니다 : " + ex.getMessage());
+                log.error("YouTube API 호출 중 오류가 발생했습니다 : {}", ex.getMessage());
                 return ResponseEntity.badRequest().body(errors);
             }
 
