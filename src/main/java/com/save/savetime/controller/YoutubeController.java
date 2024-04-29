@@ -44,6 +44,7 @@ public class YoutubeController {
                     return ResponseEntity.badRequest().body(errors);
                 }
             } catch (Exception ex) {
+                ex.printStackTrace();
                 // IOException이 발생한 경우 에러를 생성하여 반환
                 errors.reject("500", "YouTube API 호출 중 오류가 발생했습니다 : " + ex.getMessage());
                 return ResponseEntity.badRequest().body(errors);
