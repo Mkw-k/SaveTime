@@ -41,7 +41,10 @@ public class Resources implements Serializable {
     @ToString.Exclude
     private Set<ResourcesRole> resourcesRole = new HashSet<>();
 
-    public void addResourcesRole(ResourcesRole...resourcesRole){
+    public void addResourcesRole(ResourcesRole... resourcesRole) {
+        if (this.resourcesRole == null) {
+            this.resourcesRole = new HashSet<>();
+        }
         Collections.addAll(this.resourcesRole, resourcesRole);
     }
 

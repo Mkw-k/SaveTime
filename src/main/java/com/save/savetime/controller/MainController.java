@@ -1,6 +1,12 @@
 package com.save.savetime.controller;
 
+import com.save.savetime.common.AuthMember;
+import com.save.savetime.model.entity.Member;
+import com.save.savetime.service.YoutubeService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -8,10 +14,19 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
+@RequiredArgsConstructor
+@Slf4j
 public class MainController {
+    private final YoutubeService youtubeService;
 
+    //메인페이지 이동시
     @GetMapping("/")
-    public String getMain(){
+    public String getMain(@AuthMember Member member, Model model){
+        log.debug("아이디 >>> {}", member.getEmail());
+        //본인의 유튜브 리스트 받아오기
+        //List<String> myYouTubeListById = youtubeService.getMyYouTubeListById(member.getEmail());
+        //model.addAttribute("youTubeList", myYouTubeListById);
+
         return "index";
     }
 
@@ -61,8 +76,6 @@ public class MainController {
         return "listing_details";
     }
 
-    @GetMapping("/login")
-    public String getLogin(HttpServletRequest request) {
-        return "login";
-    }
+
+
 }

@@ -72,8 +72,8 @@ public class ResourcesServiceImpl implements ResourcesService {
         ResourcesRole resourcesRole = new ResourcesRole();
 
         //아닐경우에는 인서트
-        if(resources.getResourcesRole().isEmpty()){
-            resources.getResourcesRole().clear();
+        if(null == resources.getResourcesRole() || resources.getResourcesRole().isEmpty()){
+            //resources.getResourcesRole().clear(); 널이면 NPE, empty면 안해도 됨
 
             resourcesRole.setResources(resources);
             resourcesRole.setRole(newRole);
@@ -116,7 +116,7 @@ public class ResourcesServiceImpl implements ResourcesService {
         }
 
         //기존 존재하는 리소스인지 확인 위하여 get
-        Resources resource = this.resourcesRepository.findByResourceNameAndHttpMethod(resourcesDto.getResourceName(), resourcesDto.getHttpMethod());
+        Resources resource = this.resourcesRepository.findByResourceNameAndResourceType(resourcesDto.getResourceName(), resourcesDto.getResourceType());
 
         //신규 리소스일경우
         if(resource == null){

@@ -1,4 +1,4 @@
-package com.save.savetime.controller;
+package com.save.savetime.controller.admin;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -24,4 +24,5 @@ public class AdminController {
                 .header("Content-Disposition", "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
+
 }

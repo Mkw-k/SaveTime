@@ -135,7 +135,8 @@
                         <div class="section-tittle text-center mb-80">
                             <span>My Play List</span>
                             <h2>내 재생목록</h2>
-                            <a href="https://accounts.google.com/o/oauth2/auth?client_id=771907948633-cpc9g6p6ktbr93pcdh4rdnieah81thcd.apps.googleusercontent.com&redirect_uri=https://www.save-time.kro.kr:8080/callback&scope=https://www.googleapis.com/auth/youtube&response_type=token" class="btn view-btn1">내 재생목록 업데이트</a>
+                            <!--<a href="https://accounts.google.com/o/oauth2/auth?client_id=771907948633-cpc9g6p6ktbr93pcdh4rdnieah81thcd.apps.googleusercontent.com&redirect_uri=https://www.save-time.kro.kr:8080/callback&scope=https://www.googleapis.com/auth/youtube&response_type=token" class="btn view-btn1">내 재생목록 업데이트</a>-->
+                            <a href="https://accounts.google.com/o/oauth2/auth?client_id=771907948633-cpc9g6p6ktbr93pcdh4rdnieah81thcd.apps.googleusercontent.com&redirect_uri=http://localhost:8080/callback&scope=https://www.googleapis.com/auth/youtube&response_type=token" class="btn view-btn1">내 재생목록 업데이트</a>
                             <div>
                                 <br>
                                 새롭게 재생목록에 추가한 영상이 있을경우나 신규 사용자꼐서는 내 재생목록 업데이트 버튼을 클릭하여 재생목록을 갱신해주세요.
@@ -580,7 +581,7 @@
 		<!-- Jquery Plugins, main Jquery -->	
         <script src="/assets/js/plugins.js"></script>
         <script src="/assets/js/main.js"></script>
-        <script>
+        <script th:inline="javascript">
             // 페이지 로드 시 실행
             window.onload = function() {
                 // 현재 페이지의 URL에서 해시 값을 가져오기
@@ -645,6 +646,11 @@
                             alert(xhr.responseJSON[0].defaultMessage.split(':')[0]);
                         }
                     });
+                }
+                //해시값이 없는경우엔 DB값 로드
+                else{
+                    //let youTubeList = [[${youTubeList}]];
+
                 }
             };
 

@@ -103,10 +103,10 @@ public class MemberService {
     }
 
     @Transactional
-    public UserDto getMember(Long id) {
+    public UserDto getMember(String email) {
         ModelMapper modelMapper = new ModelMapper();
         //Member member = loginRepository.findById(String.valueOf(id)).orElse(new Member());
-        Member member = loginRepository.findById(id).orElse(new Member());
+        Member member = loginRepository.findByEmail(email).orElse(new Member());
 
         UserDto userDto = modelMapper.map(member, UserDto.class);
 
