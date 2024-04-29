@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 import com.save.savetime.model.dto.PlaylistDTO;
 import com.save.savetime.model.entity.YoutubeList;
 import com.save.savetime.repository.YoutubeListRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,6 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
+@Slf4j
 @Transactional
 public class YoutubeService {
 
@@ -58,6 +60,7 @@ public class YoutubeService {
 
         // OAuth 2.0 토큰 (이 부분을 실제 토큰으로 대체해L야 합니다)
         String accessToken = token;
+        log.debug("token 확인 >>> {}", accessToken);
 
         // HTTP 요청 헤더에 OAuth 2.0 토큰을 포함하여 연결 설정
         URL url = new URL(apiUrl);
@@ -105,15 +108,18 @@ public class YoutubeService {
                     .build();
 
             //먼저 이미 있는 재생목록인지 확인 : 있으면 리스트에 넣고 건너뜀
+            log.debug("이미 있는재생목록인지 확인 >>>");
             YoutubeList byListIdAndChannelId = youtubeListRepository.findByListIdAndChannelId(children.get("id").toString(), children.get("snippet").get("channelId").toString());
             if(byListIdAndChannelId != null){
+                log.debug("있는 목록임!! >> ");
                 youtubeLists.add(byListIdAndChannelId);
-                continue;
+            }else{
+                log.debug("없는 목록임!! >> ");
+                // 저장 시도
+                YoutubeList savedYoutubeList = youtubeListRepository.save(youtubeList);
+                // 저장에 성공한 경우에만 리스트에 추가
+                youtubeLists.add(savedYoutubeList);
             }
-            // 저장 시도
-            YoutubeList savedYoutubeList = youtubeListRepository.save(youtubeList);
-            // 저장에 성공한 경우에만 리스트에 추가
-            youtubeLists.add(savedYoutubeList);
         }
 
         return youtubeLists;
