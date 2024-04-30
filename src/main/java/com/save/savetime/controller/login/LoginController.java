@@ -25,7 +25,7 @@ public class LoginController {
         boolean loginSuccessBool = memberService.afterCertifyAction(request);
 
         if(loginSuccessBool){
-            return "login_success";
+            return "index";
         }else{
             return "main";
         }
