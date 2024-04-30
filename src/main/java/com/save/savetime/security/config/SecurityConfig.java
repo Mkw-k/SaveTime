@@ -121,7 +121,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessHandler(new JwtLogoutSuccessHandler()) // JwtLogoutSuccessHandler 추가
-                .logoutSuccessUrl("/")
+                .logoutSuccessUrl("/login")
                 .and()
             .rememberMe()   // 자동로그인
                 .rememberMeParameter("remember-me")

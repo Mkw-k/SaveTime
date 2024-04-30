@@ -3,11 +3,9 @@ package com.save.savetime.security.service;
 import com.save.savetime.model.dto.MemberAccount;
 import com.save.savetime.model.entity.Member;
 import com.save.savetime.repository.LoginRepository;
-import com.save.savetime.util.ContextUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,39 +28,10 @@ public class LoginService implements UserDetailsService {
          * username이 DB에 있는지 확인해줘야함
          */
 
-        //유저 타입 확인
-        String userType = (String) ContextUtil.getAttrFromSession("userType");
-
-        //TODO Ajax 에러 리턴 처리 필요
         Member member = loginRepository.findByEmail(email).orElse(null);
         ObjectNullChk(member);
-        log.info("loadUserByUsername=" + email + "/mbId=" + member.getEmail() + "/mbPassword=" + member.getPassword());
+        log.info("loadUserByUsername={}, mbId={}, mbPassword={}", email, member.getEmail(), member.getPassword());
         return new MemberAccount(member);
-
-
-        //throw new UsernameNotFoundException("회원정보 조회 실패");
-
-        // 세션에 등록되는 Type (UserDetail)
-        // UserDetail을 구현하고 있는 User객체 반환; 생성자로 아이디, 비번, Role
-        /*return User.builder()
-                .username(member.getEmail())
-                .password(member.getPassword())
-                .roles("MEMBER")
-                .build();*/
-        /*Member authMember = Member.builder()
-                .mbId(member.getEmail())
-                .mbPassword(member.getPassword())
-                .role("MEMBER")
-                .build();
-
-        return authMember;*/
-    }
-
-    private static void chkAuthYn(String authYn) {
-        if (!authYn.equals("Y")) {
-            // 관리자 인증안됨
-            throw new DisabledException("관리자 인증안됨");
-        }
     }
 
     /**

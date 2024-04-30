@@ -10,7 +10,6 @@ import com.save.savetime.util.ContextUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,8 +31,7 @@ public class MemberService {
     private final LoginRepository loginRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
-    @Autowired
-    private RoleRepository roleRepository;
+    private final  RoleRepository roleRepository;
 
     public boolean afterCertifyAction(HttpServletRequest request) {
         log.debug("진입성공!!");
@@ -46,7 +44,6 @@ public class MemberService {
         return loginSuccessBool;
     }
 
-    @Transactional
     public boolean createMember() {
         Member member = Member.builder()
                 .email((String) ContextUtil.getAttrFromSession("id"))
@@ -72,19 +69,8 @@ public class MemberService {
         }
     }
 
-    @Transactional
     public boolean createMember(Member member) {
-        //최초 Role은 User로 설정
-        /*Role role = roleRepository.findByRoleName("ROLE_USER");
-        Set<Role> roles = new HashSet<>();
-        roles.add(role);*/
 
-        /*Optional<Member> byEmail = loginRepository.findByEmail(member.getEmail());
-        if(byEmail.isPresent()){
-            member.setId(byEmail.get().getId());
-        }*/
-
-        //member.setRole(roles);
         Member savedMember = loginRepository.save(member);
 
         if(savedMember != null){
@@ -96,13 +82,13 @@ public class MemberService {
         }
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Member> getMembers() {
         List<Member> allMembers = loginRepository.findAll();
         return allMembers;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDto getMember(String email) {
         ModelMapper modelMapper = new ModelMapper();
         //Member member = loginRepository.findById(String.valueOf(id)).orElse(new Member());
@@ -119,11 +105,11 @@ public class MemberService {
         return userDto;
     }
 
-    @Transactional
     public void deleteMember(Long id) {
         loginRepository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     public Optional<Member> getMemberByEmail(String Email){
         return loginRepository.findByEmail(Email);
     }

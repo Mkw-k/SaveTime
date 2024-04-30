@@ -44,28 +44,12 @@ public class Functions {
     //기본 로그아웃 리다이렉트 URL로 설정 - response
     public static void setLogoutRedirectUrl(String requestURI, HttpServletResponse response) throws IOException {
         log.info("▶▶▶ 로그아웃 처리");
-        if(requestURI.startsWith("/hospital")){
-            response.sendRedirect("/hospital/logout");
-        }else if(requestURI.startsWith("/pharmacy")){
-            response.sendRedirect("/pharmacy/logout");
-        }else if(requestURI.startsWith("/admin")){
-            response.sendRedirect("/admin/logout");
-        }else{
-            response.sendRedirect("/logout");
-        }
+        response.sendRedirect("/logout");
     }
 
     // 기본 로그인 리다이렉트 URL로 설정 - response
     public static void setLoginRedirectUrl(String requestURI, HttpServletResponse response) throws IOException {
-        if(requestURI.startsWith("/hospital")){
-            response.sendRedirect("/hospital/login");
-        }else if(requestURI.startsWith("/pharmacy")){
-            response.sendRedirect("/pharmacy/login");
-        }else if(requestURI.startsWith("/admin")){
-            response.sendRedirect("/admin/login");
-        }else{
-            response.sendRedirect("/");
-        }
+        response.sendRedirect("/login");
     }
 
     public static String extractMonths(String input) {
