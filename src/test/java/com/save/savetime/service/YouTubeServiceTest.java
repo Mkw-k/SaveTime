@@ -20,7 +20,7 @@ class YouTubeServiceTest extends BaseTest {
         String listId = "PLb6eUvuqyLCGqOrKsNiwal5aqPu-QaKBH";
 
         //when
-        List<String> myYouTubeListById = youTubeService.getMyYouTubeListById(listId);
+        List<String> myYouTubeListById = youTubeService.getMyYouTubeByListId(listId);
 
         //then
         Assertions.assertFalse(myYouTubeListById.isEmpty(), "리스트가 비어 있지 않습니다.");

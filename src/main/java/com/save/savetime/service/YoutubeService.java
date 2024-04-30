@@ -13,6 +13,7 @@ import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
 import com.google.common.collect.Lists;
 import com.save.savetime.model.dto.PlaylistDTO;
+import com.save.savetime.model.entity.Member;
 import com.save.savetime.model.entity.YoutubeList;
 import com.save.savetime.repository.YoutubeListRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +53,7 @@ public class YoutubeService {
 
 
 
-    public List<YoutubeList> getMyPlayListByYouTubeApi(String token) throws Exception {
+    public List<YoutubeList> getMyPlayListByYouTubeApiAndSaveDB(String token) throws Exception {
         List<YoutubeList> youtubeLists = new ArrayList<>();
 
         // YouTube Data API의 엔드포인트 URL
@@ -98,18 +99,18 @@ public class YoutubeService {
             //children.get("id");
             //TODO 널처리 해줘야됨
             YoutubeList youtubeList = YoutubeList.builder()
-                    .listId(children.get("id").toString())//재생목록id
-                    .channelId(children.get("snippet").get("channelId").toString())//채널 아이디
-                    .listTitle(children.get("snippet").get("title").toString())//재생목록명
-                    .owner(children.get("snippet").get("channelTitle").toString()) //소유자 명?
-                    .thumbUrl(children.get("snippet").get("thumbnails").get("maxres").get("url").toString())// 썸네일 url
+                    .listId(children.get("id").toString().replaceAll("\"", ""))//재생목록id
+                    .channelId(children.get("snippet").get("channelId").toString().replaceAll("\"", ""))//채널 아이디
+                    .listTitle(children.get("snippet").get("title").toString().replaceAll("\"", ""))//재생목록명
+                    .owner(children.get("snippet").get("channelTitle").toString().replaceAll("\"", "")) //소유자 명?
+                    .thumbUrl(children.get("snippet").get("thumbnails").get("maxres").get("url").toString().replaceAll("\"", ""))// 썸네일 url
                     .youtubeListUpdateDate(ZonedDateTime.parse(children.get("snippet").get("publishedAt").asText(), DateTimeFormatter.ISO_DATE_TIME)) //업데이트일
                     .memberId(SecurityContextHolder.getContext().getAuthentication().getName())
                     .build();
 
             //먼저 이미 있는 재생목록인지 확인 : 있으면 리스트에 넣고 건너뜀
             log.debug("이미 있는재생목록인지 확인 >>>");
-            YoutubeList byListIdAndChannelId = youtubeListRepository.findByListIdAndChannelId(children.get("id").toString(), children.get("snippet").get("channelId").toString());
+            YoutubeList byListIdAndChannelId = youtubeListRepository.findByListIdAndChannelId(children.get("id").toString().replaceAll("\"", ""), children.get("snippet").get("channelId").toString().replaceAll("\"", ""));
             if(byListIdAndChannelId != null){
                 log.debug("있는 목록임!! >> ");
                 youtubeLists.add(byListIdAndChannelId);
@@ -125,7 +126,7 @@ public class YoutubeService {
         return youtubeLists;
     }
 
-    public List<String> getMyYouTubeListById(String listId){
+    public List<String> getMyYouTubeByListId(String listId){
         String playlistId = listId;
         ArrayList<String> videoIdList = new ArrayList<>();
 
@@ -232,4 +233,18 @@ public class YoutubeService {
         }
     }
 
+    public List<YoutubeList> getMyYouTubeListByMemberIdx(Member member) {
+        List<YoutubeList> dbYoutubeLists = youtubeListRepository.findByCreatedByIdxOrderByCreatedAtDesc(member.getIdx());
+        return dbYoutubeLists;
+    }
+
+    public List<YoutubeList> getMyYouTubeListByListId(String listId, long memberIdx){
+        List<YoutubeList> youtubeLists = new ArrayList<>();
+        if(listId.equals("all")){
+            youtubeLists = youtubeListRepository.findByCreatedByIdxOrderByCreatedAtDesc(memberIdx);
+        }else{
+            youtubeLists = youtubeListRepository.findByListIdOrderByYoutubeListUpdateDateDesc(listId);
+        }
+        return youtubeLists;
+    }
 }

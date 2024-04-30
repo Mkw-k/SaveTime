@@ -100,23 +100,19 @@
                                 <h1>당신의 시간을 아껴줍니다</h1>
                             </div>
                             <!--Hero form -->
-                            <form action="#" class="search-box">
+                            <form id="searchForm" action="/youtube/list" class="search-box" method="get">
                                 <div class="input-form">
-                                    <input type="text" placeholder="내 영상 검색어 입력">
+                                    <input type="text" name="query" placeholder="내 재생목록 검색어 입력 (개발중)" readonly>
                                 </div>
                                 <div class="select-form">
                                     <div class="select-itms">
-                                        <select name="select" id="select1">
-                                            <option value="">All Catagories</option>
-                                            <option value="">Catagories One</option>
-                                            <option value="">Catagories Two</option>
-                                            <option value="">Catagories Three</option>
-                                            <option value="">Catagories Four</option>
+                                        <select name="listId" id="select1">
+                                            <option value="all">All Catagories</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="search-form">
-                                    <a href="#">Search</a>
+                                    <a href="#" id="searchLink">Search</a>
                                 </div>	
                             </form>	
                         </div>
@@ -593,6 +589,8 @@
         <script src="/assets/js/plugins.js"></script>
         <script src="/assets/js/main.js"></script>
         <script th:inline="javascript">
+            let youTubeList = [[${dbYoutubeLists}]];
+
             // 페이지 로드 시 실행
             window.onload = function() {
                 // 현재 페이지의 URL에서 해시 값을 가져오기
@@ -621,13 +619,15 @@
                     // Ajax 요청 보내기
                     $.ajax({
                         url: "/youtube",
-                        type: "GET",
+                        type: "POST",
                         data: {
                             token: accessToken
                         },
                         success: function(data) {
                             // 데이터를 처리하고 화면에 표시하는 예시
                             let youtubeHtml = ``;
+                            let categorySelectHtml = `<option value="all">All Catagories</option>`;
+                            let niceCategorySelectHtml = `<option value="all">All Catagories</option>`;
 
                             for (var i=0; i<data.length; i++){
                                 youtubeHtml += `
@@ -643,6 +643,9 @@
                                         </div>
                                     </div>
                                 `;
+
+                                categorySelectHtml += `<option value="${youTubeList[i].listId.replaceAll('\"', '')}">${youTubeList[i].listTitle}</option>`;
+                                niceCategorySelectHtml += `<li data-value="${youTubeList[i].listId.replaceAll('\"', '')}" class="option selected focus">${youTubeList[i].listTitle}</li>`;
                             }
                             // 각 재생목록의 제목을 화면에 출력
                             /*playlists.forEach(function(playlist) {
@@ -652,6 +655,8 @@
                             });*/
 
                             $('#youtube_play_list').append(youtubeHtml);
+                            $('#select1').append(categorySelectHtml);
+                            $('.nice-select ul.list').append(niceCategorySelectHtml);
                         },
                         error: function(xhr, status, error) {
                             alert(xhr.responseJSON[0].defaultMessage.split(':')[0]);
@@ -660,8 +665,39 @@
                 }
                 //해시값이 없는경우엔 DB값 로드
                 else{
-                    //let youTubeList = [[${youTubeList}]];
+                    let youtubeHtml = ``;
+                    let categorySelectHtml = ``;
+                    let niceCategorySelectHtml = ``;
+                    console.log(youTubeList);
 
+                    for (var i=0; i<youTubeList.length; i++){
+                        youtubeHtml += `
+                                    <div class="col-lg-4 col-md-6 col-sm-6">
+                                        <div class="single-location mb-30">
+                                            <div class="location-img">
+                                                <img src="${youTubeList[i].thumbUrl.replaceAll('\"', '')}" alt="">
+                                            </div>
+                                            <div class="location-details">
+                                                <p>${youTubeList[i].listTitle}</p>
+                                                <a href="/listing?listId=${youTubeList[i].listId.replaceAll('\"', '')}" class="location-btn">재생목록 <i class="ti-plus"></i> 으로이동</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+
+                        categorySelectHtml += `<option value="${youTubeList[i].listId.replaceAll('\"', '')}">${youTubeList[i].listTitle}</option>`;
+                        niceCategorySelectHtml += `<li data-value="${youTubeList[i].listId.replaceAll('\"', '')}" class="option selected focus">${youTubeList[i].listTitle}</li>`;
+                    }
+                    // 각 재생목록의 제목을 화면에 출력
+                    /*playlists.forEach(function(playlist) {
+                        var title = playlist.snippet.title;
+                        console.log("Playlist Title:", title);
+                        // 여기서 화면에 표시하는 코드 작성
+                    });*/
+
+                    $('#youtube_play_list').append(youtubeHtml);
+                    $('#select1').append(categorySelectHtml);
+                    $('.nice-select ul.list').append(niceCategorySelectHtml);
                 }
             };
 
@@ -674,6 +710,17 @@
                 // 쿠키 만들기
                 document.cookie = "access_token=" + accessToken + ";expires=" + expirationDate.toUTCString() + ";path=/";
             }
+
+            /**
+             * 검색버튼 클릭시
+             */
+            document.addEventListener('DOMContentLoaded', function() {
+                // 링크를 클릭했을 때 폼을 서브밋하는 함수를 호출
+                document.getElementById('searchLink').addEventListener('click', function(event) {
+                    event.preventDefault(); // 기본 동작(링크 이동)을 막음
+                    document.getElementById('searchForm').submit(); // 폼 서브밋
+                });
+            });
 
         </script>
         
