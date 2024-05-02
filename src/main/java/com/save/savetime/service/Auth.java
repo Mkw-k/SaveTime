@@ -66,7 +66,13 @@ public class Auth {
                 .build();
 
         // Build the local server and bind it to port 8080
-        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
+        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder()
+                .setPort(8080)
+                .setHost("localhost")
+                .build();
+
+        String redirectUri = localReceiver.getRedirectUri();
+        System.out.println("Redirect URI: " + redirectUri);
 
         // Authorize.
         return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");

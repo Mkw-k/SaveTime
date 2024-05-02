@@ -20,8 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.List;
 
 import static com.save.savetime.common.Functions.getCookieValue;
 import static com.save.savetime.common.Functions.setLogoutRedirectUrl;
@@ -50,40 +48,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		String username = "";
-		List<String> passUrls = Arrays.asList(
-				"/app/emailLogin"
-				, "/app/certify/"
-				, "/app/certify/signUp"
-				, "/app/certify/findId"
-				, "/app/findPw"
-				, "/app/niceSuccess/"
-				, "/app/signUp/"
-				, "/app/signUpForm"
-				, "/app/signUpAction"
-				, "/app/signUpComplete/"
-				, "/app/signUpSNS"
-				, "/oauth2/authorization"
-				, "/hospital/login"
-				, "/pharmacy/login"
-				, "/admin/login"
-				, "/app/ajaxemaillogin"
-				, "/js"
-				, "/css"
-				, "/webfonts"
-		        , "/favicon"
-		        , "/firebase"
-				, "/modules"
-				, "/obj");
-
-		List<String> logoutAfterURL = Arrays.asList("/hospital", "/pharmacy", "/admin");
-
-		//0. 확인이 필요없는 요청은 필터 처리를 건너뛰고 바로 다음 필터로 넘어감
 		String requestURI = request.getRequestURI();
-		if (passUrls.stream().anyMatch(requestURI::startsWith)
-				|| logoutAfterURL.contains(requestURI)) {
-			chain.doFilter(request, response);
-			return;
-		}
 
 		//1. 쿠키확인
 		String bearerAccessToken = getCookieValue(request, JwtProperties.ACCESS_TOKEN_STRING);

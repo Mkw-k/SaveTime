@@ -12,10 +12,10 @@ import com.save.savetime.security.jwt.JwtAuthenticationFilter;
 import com.save.savetime.security.jwt.JwtAuthorizationFilter;
 import com.save.savetime.security.jwt.JwtLogoutSuccessHandler;
 import com.save.savetime.security.metadatasource.UrlFilterInvocationSecurityMetadatsSource;
-import com.save.savetime.security.voter.IpAddressVoter;
+import com.save.savetime.security.service.JwtService;
 import com.save.savetime.security.service.LoginService;
 import com.save.savetime.security.service.SecurityResourceService;
-import com.save.savetime.security.service.JwtService;
+import com.save.savetime.security.voter.IpAddressVoter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -233,7 +233,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 , "/webfonts/**"
                 , "/favicon/**"
                 , "/firebase/**"
-                , "/firebase-messaging-sw.js");
+                , "/firebase-messaging-sw.js"
+                , "/asset/**"
+                , "/oauth2/authorization"
+                , "/modules"
+                , "/obj"
+        );
+
     }
 
 }

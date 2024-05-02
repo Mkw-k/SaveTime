@@ -103,7 +103,7 @@ public class YoutubeService {
                     .channelId(children.get("snippet").get("channelId").toString().replaceAll("\"", ""))//채널 아이디
                     .listTitle(children.get("snippet").get("title").toString().replaceAll("\"", ""))//재생목록명
                     .owner(children.get("snippet").get("channelTitle").toString().replaceAll("\"", "")) //소유자 명?
-                    .thumbUrl(children.get("snippet").get("thumbnails").get("maxres").get("url").toString().replaceAll("\"", ""))// 썸네일 url
+                    .thumbUrl(getThumbUrl(children.get("snippet").get("thumbnails")))// 썸네일 url
                     .youtubeListUpdateDate(ZonedDateTime.parse(children.get("snippet").get("publishedAt").asText(), DateTimeFormatter.ISO_DATE_TIME)) //업데이트일
                     .memberId(SecurityContextHolder.getContext().getAuthentication().getName())
                     .build();
@@ -124,6 +124,22 @@ public class YoutubeService {
         }
 
         return youtubeLists;
+    }
+
+    private String getThumbUrl(JsonNode thumbnailsNode) {
+        String thumbUrl = "";
+
+        if(thumbnailsNode.get("maxres") != null){
+            thumbUrl = thumbnailsNode.get("maxres").get("url").toString().replaceAll("\"", "");
+        }else if(thumbnailsNode.get("high") != null){
+            thumbUrl = thumbnailsNode.get("high").get("url").toString().replaceAll("\"", "");
+        }else if(thumbnailsNode.get("medium") != null){
+            thumbUrl = thumbnailsNode.get("medium").get("url").toString().replaceAll("\"", "");
+        }else{ //default
+            thumbUrl = thumbnailsNode.get("default").get("url").toString().replaceAll("\"", "");
+        }
+
+        return thumbUrl;
     }
 
     public List<String> getMyYouTubeByListId(String listId){
