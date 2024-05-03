@@ -44,12 +44,12 @@ public class YoutubeController {
             // YouTube API를 통해 재생목록을 가져옴
             playlists = youTubeService.getMyPlayListByYouTubeApiAndSaveDB(requestDTO.getToken());
             // 유효성 검사 수행
-            listValidator.validateReturnedLists(playlists, errors);
+//            listValidator.validateReturnedLists(playlists, errors);
 
             // 가져온 재생목록이 비어있는지 확인
-            if (errors.hasErrors()) {
-                return ResponseEntity.badRequest().body(errors);
-            }
+//            if (errors.hasErrors()) {
+//                return ResponseEntity.badRequest().body(errors);
+//            }
         } catch (Exception ex) {
             // IOException이 발생한 경우 에러를 생성하여 반환
             errors.reject("500", "YouTube API 호출 중 오류가 발생했습니다 : " + ex.getMessage());

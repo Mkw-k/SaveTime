@@ -12,13 +12,16 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.DataStore;
 import com.google.api.client.util.store.FileDataStoreFactory;
-import java.io.File;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
 
+/**
+ * Shared class used by every sample. Contains methods for authorizing a user and caching credentials.
+ */
 public class Auth {
 
     /**
@@ -66,13 +69,7 @@ public class Auth {
                 .build();
 
         // Build the local server and bind it to port 8080
-        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder()
-                .setPort(8080)
-                .setHost("localhost")
-                .build();
-
-        String redirectUri = localReceiver.getRedirectUri();
-        System.out.println("Redirect URI: " + redirectUri);
+        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
 
         // Authorize.
         return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");

@@ -1,4 +1,3 @@
-package com.save.savetime.util;
 /*
  * Copyright (c) 2015 Google Inc.
  *
@@ -13,6 +12,7 @@ package com.save.savetime.util;
  * the License.
  */
 
+package com.save.savetime.util;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;

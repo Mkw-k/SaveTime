@@ -12,10 +12,12 @@ import com.google.api.services.youtube.YouTubeRequestInitializer;
 import com.google.api.services.youtube.model.PlaylistItem;
 import com.google.api.services.youtube.model.PlaylistItemListResponse;
 import com.google.common.collect.Lists;
+import com.save.savetime.common.Constants;
 import com.save.savetime.model.dto.PlaylistDTO;
 import com.save.savetime.model.entity.Member;
 import com.save.savetime.model.entity.YoutubeList;
 import com.save.savetime.repository.YoutubeListRepository;
+import com.save.savetime.util.YoutubeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,6 +48,10 @@ public class YoutubeService {
     private static String YOUTUBE_API_KEY;
     @Autowired
     YoutubeListRepository youtubeListRepository;
+
+    @Autowired
+    private YoutubeUtils youtubeUtils;
+
     private static YouTube youtube;
 
     private static final String APPLICATION_NAME = "My First Project";
@@ -56,8 +62,8 @@ public class YoutubeService {
     public List<YoutubeList> getMyPlayListByYouTubeApiAndSaveDB(String token) throws Exception {
         List<YoutubeList> youtubeLists = new ArrayList<>();
 
-        // YouTube Data API의 엔드포인트 URL
-        String apiUrl = YOUTUBE_API_URL;
+        // YouTube Data API의 URL
+        String apiUrl = YOUTUBE_API_URL + Constants.YoutubeEndPointUrl.playlist.getUrl();
 
         // OAuth 2.0 토큰 (이 부분을 실제 토큰으로 대체해L야 합니다)
         String accessToken = token;
@@ -191,7 +197,7 @@ public class YoutubeService {
                 "youtube-cmdline-myuploads-sample").build();
 
         // Define a list to store items in the list of uploaded videos.
-        List<PlaylistItem> playlistItemList = new ArrayList<PlaylistItem>();
+        List<PlaylistItem> playlistItemList = new ArrayList<>();
 
         // 재생목록에 속한 동영상 목록 가져오기
         // Retrieve the playlist of the channel's uploaded videos.
@@ -262,5 +268,9 @@ public class YoutubeService {
             youtubeLists = youtubeListRepository.findByListIdOrderByYoutubeListUpdateDateDesc(listId);
         }
         return youtubeLists;
+    }
+
+    public void getYoutubeListSample() throws GeneralSecurityException, IOException {
+        youtubeUtils.getYouTubeListSampleLogic();
     }
 }

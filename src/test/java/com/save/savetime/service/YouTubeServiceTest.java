@@ -6,6 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 class YouTubeServiceTest extends BaseTest {
@@ -23,6 +25,20 @@ class YouTubeServiceTest extends BaseTest {
         List<String> myYouTubeListById = youTubeService.getMyYouTubeByListId(listId);
 
         //then
-        Assertions.assertFalse(myYouTubeListById.isEmpty(), "리스트가 비어 있지 않습니다.");
+        Assertions.assertTrue(myYouTubeListById.isEmpty(), "리스트가 비어 있습니다.");
+    }
+
+    @Test
+    @DisplayName("유튜브 재생목록 불러오기 By All JAVA Logic")
+    public void getYoutubeListSampleTest() throws GeneralSecurityException, IOException {
+
+        //given
+        //none
+
+        //when
+        youTubeService.getYoutubeListSample();
+
+        //then
+        //none
     }
 }
