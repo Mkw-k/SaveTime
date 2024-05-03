@@ -24,10 +24,12 @@ public class Audit {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    //FIXME 비밀번호 숨기기
     @CreatedBy
     @ManyToOne
     private Member createdBy;
 
+    //FIXME 비밀번호 숨기기
     @LastModifiedBy
     @ManyToOne
     private Member modifiedBy;

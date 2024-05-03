@@ -4,12 +4,13 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.save.savetime.security.CustomUsernamePasswordAuthenticationToken;
-import com.save.savetime.security.service.LoginService;
 import com.save.savetime.security.service.JwtService;
+import com.save.savetime.security.service.LoginService;
 import com.save.savetime.util.ContextUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -19,8 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.List;
 
 import static com.save.savetime.common.Functions.getCookieValue;
 import static com.save.savetime.common.Functions.setLogoutRedirectUrl;
@@ -49,40 +48,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		String username = "";
-		List<String> passUrls = Arrays.asList(
-				"/app/emailLogin"
-				, "/app/certify/"
-				, "/app/certify/signUp"
-				, "/app/certify/findId"
-				, "/app/findPw"
-				, "/app/niceSuccess/"
-				, "/app/signUp/"
-				, "/app/signUpForm"
-				, "/app/signUpAction"
-				, "/app/signUpComplete/"
-				, "/app/signUpSNS"
-				, "/oauth2/authorization"
-				, "/hospital/login"
-				, "/pharmacy/login"
-				, "/admin/login"
-				, "/app/ajaxemaillogin"
-				, "/js"
-				, "/css"
-				, "/webfonts"
-		        , "/favicon"
-		        , "/firebase"
-				, "/modules"
-				, "/obj");
-
-		List<String> logoutAfterURL = Arrays.asList("/hospital", "/pharmacy", "/admin");
-
-		//0. 확인이 필요없는 요청은 필터 처리를 건너뛰고 바로 다음 필터로 넘어감
 		String requestURI = request.getRequestURI();
-		if (passUrls.stream().anyMatch(requestURI::startsWith)
-				|| logoutAfterURL.contains(requestURI)) {
-			chain.doFilter(request, response);
-			return;
-		}
 
 		//1. 쿠키확인
 		String bearerAccessToken = getCookieValue(request, JwtProperties.ACCESS_TOKEN_STRING);
@@ -148,8 +114,15 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter{
 
 		//username값이 존재할경우
 		if(username != null) {
+			UserDetails userDetails = null;
 
-			UserDetails userDetails = loginService.loadUserByUsername(username);
+			try {
+				userDetails = loginService.loadUserByUsername(username);
+			} catch (UsernameNotFoundException e) {
+				logger.info("가입되지 않은 유저!!");
+				setLogoutRedirectUrl(requestURI, response);
+				return;
+			}
 
 			// 인증은 토큰 검증시 끝. 인증을 하기 위해서가 아닌 스프링 시큐리티가 수행해주는 권한 처리를 위해 
 			// 아래와 같이 토큰을 만들어서 Authentication 객체를 강제로 만들고 그걸 세션에 저장!

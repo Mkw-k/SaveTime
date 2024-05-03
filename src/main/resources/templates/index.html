@@ -13,14 +13,21 @@
             <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
             <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
             <link rel="stylesheet" href="/assets/css/slicknav.css">
-            <link rel="stylesheet" href="/assets/css/flaticon.css">
+            <link rel="stylesheet" href="/assets/fonts/flaticon.css">
             <link rel="stylesheet" href="/assets/css/animate.min.css">
             <link rel="stylesheet" href="/assets/css/magnific-popup.css">
-            <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
-            <link rel="stylesheet" href="/assets/css/themify-icons.css">
+            <link rel="stylesheet" href="/assets/fonts/fontawesome-all.min.css">
+            <link rel="stylesheet" href="/assets/fonts/themify-icons.css">
             <link rel="stylesheet" href="/assets/css/slick.css">
             <link rel="stylesheet" href="/assets/css/nice-select.css">
-            <link rel="stylesheet" href="/assets/css/style.css">
+            <link rel="stylesheet" href="/assets/fonts/style.css">
+
+        <style>
+            .logo{
+                width: 150px;
+                height: 36px;
+            }
+        </style>
    </head>
 
    <body>
@@ -46,7 +53,7 @@
                             <!-- Logo -->
                             <div class="col-xl-2 col-lg-2 col-md-1">
                                 <div class="logo">
-                                  <a href="index"><img src="/assets/img/logo/logo.png" alt=""></a>
+                                  <a href="index"><img class="logo" src="/assets/img/logo/logo.png" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-xl-10 col-lg-10 col-md-8">
@@ -55,19 +62,19 @@
                                     <nav>
                                         <ul id="navigation">                                                                                                                                     
                                             <li><a href="index">Home</a></li>
-                                            <li><a href="about">About</a></li>
-                                            <li><a href="catagori">Catagories</a></li>
+                                            <!--<li><a href="about">About</a></li>
+                                            <li><a href="catagori">Catagories</a></li>-->
                                             <li><a href="listing">Listing</a></li>
-                                            <li><a href="#">Page</a>
+                                            <!--<li><a href="#">Page</a>
                                                 <ul class="submenu">
                                                     <li><a href="blog">Blog</a></li>
                                                     <li><a href="blog-details">Blog Details</a></li>
                                                     <li><a href="elements">Element</a></li>
                                                     <li><a href="listing-details">Listing details</a></li>
                                                 </ul>
-                                            </li>
+                                            </li>-->
                                             <li><a href="contact">Contact</a></li>
-                                            <li class="add-list"><a href="listing-details"><i class="ti-plus"></i> add Listing</a></li>
+                                            <!--<li class="add-list"><a href="listing-details"><i class="ti-plus"></i> add Listing</a></li>-->
                                             <li class="login"><a href="login">
                                                 <i class="ti-user"></i> Sign in or Register</a>
                                             </li>
@@ -100,23 +107,19 @@
                                 <h1>당신의 시간을 아껴줍니다</h1>
                             </div>
                             <!--Hero form -->
-                            <form action="#" class="search-box">
+                            <form id="searchForm" action="/youtube/list" class="search-box" method="get">
                                 <div class="input-form">
-                                    <input type="text" placeholder="내 영상 검색어 입력">
+                                    <input type="text" name="query" placeholder="내 재생목록 검색어 입력 (개발중)" readonly>
                                 </div>
                                 <div class="select-form">
                                     <div class="select-itms">
-                                        <select name="select" id="select1">
-                                            <option value="">All Catagories</option>
-                                            <option value="">Catagories One</option>
-                                            <option value="">Catagories Two</option>
-                                            <option value="">Catagories Three</option>
-                                            <option value="">Catagories Four</option>
+                                        <select name="listId" id="select1">
+                                            <option value="all">All Catagories</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="search-form">
-                                    <a href="#">Search</a>
+                                    <a href="#" id="searchLink">Search</a>
                                 </div>	
                             </form>	
                         </div>
@@ -135,6 +138,7 @@
                         <div class="section-tittle text-center mb-80">
                             <span>My Play List</span>
                             <h2>내 재생목록</h2>
+                            <!--<a href="https://accounts.google.com/o/oauth2/auth?client_id=771907948633-cpc9g6p6ktbr93pcdh4rdnieah81thcd.apps.googleusercontent.com&redirect_uri=https://www.save-time.kro.kr:8080/Callback&scope=https://www.googleapis.com/auth/youtube&response_type=token" class="btn view-btn1">내 재생목록 업데이트</a>-->
                             <a href="https://accounts.google.com/o/oauth2/auth?client_id=771907948633-cpc9g6p6ktbr93pcdh4rdnieah81thcd.apps.googleusercontent.com&redirect_uri=http://localhost:8080/callback&scope=https://www.googleapis.com/auth/youtube&response_type=token" class="btn view-btn1">내 재생목록 업데이트</a>
                             <div>
                                 <br>
@@ -177,8 +181,8 @@
                                 <span class="flaticon-list"></span>
                             </div>
                             <div class="services-cap">
-                                <h5><a href="#">1. Choose a Category</a></h5>
-                                <p>incidid labore lore magna aliqua uisipsum suspendis loris.</p>
+                                <h5><a href="#">1. 재생목록 업데이트</a></h5>
+                                <p>내 재생목록 업데이트 버튼을 눌러 재생목록을 업데이트 해주세요.</p>
                             </div>
                             <!-- Shpape -->
                             <img class="shape1 d-none d-lg-block" src="/assets/img/icon/serices1.png" alt="">
@@ -190,8 +194,8 @@
                                 <span class="flaticon-problem"></span>
                             </div>
                             <div class="services-cap">
-                                <h5><a href="#">2. what you want</a></h5>
-                                <p>incidid labore lore magna aliqua uisipsum suspendis loris.</p>
+                                <h5><a href="#">2. 재생목록 불러오기</a></h5>
+                                <p>기존에 검색하여 저장되어있는 재생목록은 따로 재생목록 업데이트를 진행하지 않아도 불러오기가 가능합니다. 하지만 비공개 재생목록의 경우에는 영상보기 페이지로 이동이 불가합니다. 비공개 재생목록의 경우 영상보기 페이지로 이동하시려면 내 재생목록 업데이트를 한번 진행 하신 후에 이동이 가능합니다.</p>
                             </div>
                             <img class="shape2 d-none d-lg-block" src="/assets/img/icon/serices2.png" alt="">
                         </div>
@@ -202,8 +206,8 @@
                                 <span class="flaticon-respect"></span>
                             </div>
                             <div class="services-cap">
-                                <h5><a href="#">3. Go out & Explore</a></h5>
-                                <p>incidid labore lore magna aliqua uisipsum suspendis loris.</p>
+                                <h5><a href="#">3. 재생목록 검색</a></h5>
+                                <p>한번 업데이트 해놨던 재생목록들은 검색하기 기능을 통해 쉽게 검색이 가능합니다.</p>
                             </div>
                         </div>
                     </div>
@@ -279,18 +283,18 @@
         <!-- Categories Area End -->
 
          <!-- peoples-visit Start -->
-         <div class="peoples-visit dining-padding-top">
-            <!-- Single Left img -->
+         <!--<div class="peoples-visit dining-padding-top">
+            &lt;!&ndash; Single Left img &ndash;&gt;
             <div class="single-visit left-img">
                 <div class="container">
                     <div class="row justify-content-end">
                         <div class="col-lg-8">
                             <div class="visit-caption">
                                 <span>We are offering for you</span>
-                                <h3>Every Month, Millions of People 
+                                <h3>Every Month, Millions of People
                                     visit this site We’ve Built.</h3>
                                 <p>Unlike what its name implies, dry cleaning is not actually a 'dry' process. Clothes are soaked in a different solvent.</p>
-                                <!--Single Visit categories -->
+                                &lt;!&ndash;Single Visit categories &ndash;&gt;
                                 <div class="visit-categories mb-40">
                                     <div class="visit-location">
                                         <span class="flaticon-travel"></span>
@@ -301,7 +305,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                <!--Single Visit categories -->
+                                &lt;!&ndash;Single Visit categories &ndash;&gt;
                                 <div class="visit-categories">
                                     <div class="visit-location">
                                         <span class="flaticon-work"></span>
@@ -317,7 +321,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <!-- peoples-visit End -->
 
         <!-- Testimonial Start -->
@@ -327,53 +331,64 @@
                     <div class="col-lg-12">
                         <!-- Section Tittle -->
                         <div class="section-tittle text-center mb-80">
-                            <span>Our client testimonials</span>
-                            <h2>What our client say</h2>
-                        </div> 
+                            <h2>About Me</h2>
+                            <p>For inquiries and contact information, please see below.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="row align-items-center">
                     <div class="col-lg-11 col-md-11">
                         <div class="h1-testimonial-active">
+
                             <!-- Single Testimonial -->
                             <div class="single-testimonial text-center">
                                 <!-- Testimonial Content -->
                                 <div class="testimonial-caption ">
                                     <div class="testimonial-top-cap">
-                                        <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis por incididunt ut labore et dolore mas. </p>
+                                        <p>
+                                            안녕하세요. 개발로 세상을 이롭게 하고 싶은 개발자 고명우입니다🌟<br>
+                                            더 나은 삶의 질을 제공하고, 나의 삶을 더 누릴 수 있는 서비스를 제공하도록 노력하겠습니다💼<br>
+                                            📞 연락처 : 010-2607-4128 <br>
+                                            📧 이메일 : rhauddn111@hanmail.net
+                                        </p>
                                     </div>
                                     <!-- founder -->
                                     <div class="testimonial-founder d-flex align-items-center justify-content-center mb-30">
                                         <div class="founder-img">
-                                            <img src="/assets/img/testmonial/Homepage_testi.png" alt="">
+                                            <img src="https://github.com/Mkw-k/testrepo/blob/master/1.%EC%A6%9D%EB%AA%85%EC%82%AC%EC%A7%84.jpg?raw=true" alt="" style="width: 130px; height: 150px; border-radius: 50%;">
                                         </div>
                                         <div class="founder-text">
-                                            <span>Oliva jems</span>
-                                            <p>UIX designer</p>
+                                            <span>고명우</span>
+                                            <p>BackEnd Developer</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <!-- Single Testimonial -->
                             <div class="single-testimonial text-center">
                                 <!-- Testimonial Content -->
                                 <div class="testimonial-caption ">
                                     <div class="testimonial-top-cap">
-                                        <p>Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis por incididunt ut labore et dolore mas. </p>
+                                        <p>
+                                            안녕하세요. 개발로 세상을 이롭게 하고 싶은 개발자 고명우입니다🌟<br>
+                                            더 나은 삶의 질을 제공하고, 나의 삶을 더 누릴 수 있는 서비스를 제공하도록 노력하겠습니다💼<br>
+                                            📞 연락처 : 010-2607-4128 <br>
+                                            📧 이메일 : rhauddn111@hanmail.net
+                                        </p>
                                     </div>
                                     <!-- founder -->
                                     <div class="testimonial-founder d-flex align-items-center justify-content-center mb-30">
                                         <div class="founder-img">
-                                            <img src="/assets/img/testmonial/Homepage_testi.png" alt="">
+                                            <img src="https://github.com/Mkw-k/testrepo/blob/master/1.%EC%A6%9D%EB%AA%85%EC%82%AC%EC%A7%84.jpg?raw=true" alt="" style="width: 130px; height: 150px; border-radius: 50%;">
                                         </div>
                                         <div class="founder-text">
-                                            <span>Oliva jems</span>
-                                            <p>UIX designer</p>
+                                            <span>고명우</span>
+                                            <p>BackEnd Developer</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -474,7 +489,7 @@
                                 <div class="single-footer-caption mb-30">
                                     <!-- logo -->
                                     <div class="footer-logo">
-                                        <a href="index"><img src="/assets/img/logo/logo2_footer.png" alt=""></a>
+                                        <a href="index"><img class="logo" src="/assets/img/logo/logo.png" alt=""></a>
                                     </div>
                                 </div>
                             </div>
@@ -484,15 +499,15 @@
                                 <div class="footer-tittle">
                                     <h4>Quick Link</h4>
                                     <ul>
-                                        <li><a href="#">Home</a></li>
+                                        <li><a href="/index">Home</a></li>
                                         <li><a href="#">Listing</a></li>
-                                        <li><a href="#">About</a></li>
-                                        <li><a href="#">Contact</a></li>
+                                        <!--<li><a href="#">About</a></li>
+                                        <li><a href="#">Contact</a></li>-->
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                        <!--<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                             <div class="single-footer-caption mb-50">
                                 <div class="footer-tittle">
                                     <h4>Categories</h4>
@@ -504,14 +519,14 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                             <div class="single-footer-caption mb-50">
                                 <div class="footer-tittle">
                                     <h4>Download App</h4>
                                     <ul>
-                                        <li class="app-log"><a href="#"><img src="/assets/img/gallery/app-logo.png" alt=""></a></li>
-                                        <li><a href="#"><img src="/assets/img/gallery/app-logo2.png" alt=""></a></li>
+                                        <li class="app-log"><a href="#" onclick="alert('출시 예정이니 잠시만 기다려주세요'); return false;"><img src="/assets/img/gallery/app-logo.png" alt=""></a></li>
+                                        <li><a href="#" onclick="alert('출시 예정이니 잠시만 기다려주세요'); return false;"><img src="/assets/img/gallery/app-logo2.png" alt=""></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -580,7 +595,9 @@
 		<!-- Jquery Plugins, main Jquery -->	
         <script src="/assets/js/plugins.js"></script>
         <script src="/assets/js/main.js"></script>
-        <script>
+        <script th:inline="javascript">
+            let youTubeList = [[${dbYoutubeLists}]];
+
             // 페이지 로드 시 실행
             window.onload = function() {
                 // 현재 페이지의 URL에서 해시 값을 가져오기
@@ -609,13 +626,15 @@
                     // Ajax 요청 보내기
                     $.ajax({
                         url: "/youtube",
-                        type: "GET",
+                        type: "POST",
                         data: {
                             token: accessToken
                         },
                         success: function(data) {
                             // 데이터를 처리하고 화면에 표시하는 예시
                             let youtubeHtml = ``;
+                            let categorySelectHtml = `<option value="all">All Catagories</option>`;
+                            let niceCategorySelectHtml = `<option value="all">All Catagories</option>`;
 
                             for (var i=0; i<data.length; i++){
                                 youtubeHtml += `
@@ -631,6 +650,9 @@
                                         </div>
                                     </div>
                                 `;
+
+                                categorySelectHtml += `<option value="${data[i].listId.replaceAll('\"', '')}">${data[i].listTitle}</option>`;
+                                niceCategorySelectHtml += `<li data-value="${data[i].listId.replaceAll('\"', '')}" class="option selected focus">${data[i].listTitle}</li>`;
                             }
                             // 각 재생목록의 제목을 화면에 출력
                             /*playlists.forEach(function(playlist) {
@@ -640,11 +662,49 @@
                             });*/
 
                             $('#youtube_play_list').append(youtubeHtml);
+                            $('#select1').append(categorySelectHtml);
+                            $('.nice-select ul.list').append(niceCategorySelectHtml);
                         },
                         error: function(xhr, status, error) {
                             alert(xhr.responseJSON[0].defaultMessage.split(':')[0]);
                         }
                     });
+                }
+                //해시값이 없는경우엔 DB값 로드
+                else{
+                    let youtubeHtml = ``;
+                    let categorySelectHtml = ``;
+                    let niceCategorySelectHtml = ``;
+                    console.log(youTubeList);
+
+                    for (var i=0; i<youTubeList.length; i++){
+                        youtubeHtml += `
+                                    <div class="col-lg-4 col-md-6 col-sm-6">
+                                        <div class="single-location mb-30">
+                                            <div class="location-img">
+                                                <img src="${youTubeList[i].thumbUrl.replaceAll('\"', '')}" alt="">
+                                            </div>
+                                            <div class="location-details">
+                                                <p>${youTubeList[i].listTitle}</p>
+                                                <a href="/listing?listId=${youTubeList[i].listId.replaceAll('\"', '')}" class="location-btn">재생목록 <i class="ti-plus"></i> 으로이동</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+
+                        categorySelectHtml += `<option value="${youTubeList[i].listId.replaceAll('\"', '')}">${youTubeList[i].listTitle}</option>`;
+                        niceCategorySelectHtml += `<li data-value="${youTubeList[i].listId.replaceAll('\"', '')}" class="option selected focus">${youTubeList[i].listTitle}</li>`;
+                    }
+                    // 각 재생목록의 제목을 화면에 출력
+                    /*playlists.forEach(function(playlist) {
+                        var title = playlist.snippet.title;
+                        console.log("Playlist Title:", title);
+                        // 여기서 화면에 표시하는 코드 작성
+                    });*/
+
+                    $('#youtube_play_list').append(youtubeHtml);
+                    $('#select1').append(categorySelectHtml);
+                    $('.nice-select ul.list').append(niceCategorySelectHtml);
                 }
             };
 
@@ -657,6 +717,17 @@
                 // 쿠키 만들기
                 document.cookie = "access_token=" + accessToken + ";expires=" + expirationDate.toUTCString() + ";path=/";
             }
+
+            /**
+             * 검색버튼 클릭시
+             */
+            document.addEventListener('DOMContentLoaded', function() {
+                // 링크를 클릭했을 때 폼을 서브밋하는 함수를 호출
+                document.getElementById('searchLink').addEventListener('click', function(event) {
+                    event.preventDefault(); // 기본 동작(링크 이동)을 막음
+                    document.getElementById('searchForm').submit(); // 폼 서브밋
+                });
+            });
 
         </script>
         
