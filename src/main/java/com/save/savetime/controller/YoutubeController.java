@@ -17,8 +17,11 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +73,12 @@ public class YoutubeController {
         model.addAttribute("dbYoutubeLists", myYouTubeListByListId);
 
         return "index";
+    }
+
+    @GetMapping("/info")
+    @ResponseBody
+    public void getMyYoutubeData() throws GeneralSecurityException, IOException {
+        youTubeService.getYoutubeListSample();
     }
 
 
