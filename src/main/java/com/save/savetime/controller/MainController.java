@@ -26,7 +26,7 @@ public class MainController {
     //메인페이지 이동시
     @GetMapping("/")
     public String getMain(@AuthMember Member member, Model model){
-        log.debug("아이디 >>> {}", member.getEmail());
+        //log.debug("아이디 >>> {}", member.getEmail());
         //본인의 유튜브 리스트 받아오기
         List<YoutubeList> myYouTubeListByMemberIdx = youtubeService.getMyYouTubeListByMemberIdx(member);
         model.addAttribute("dbYoutubeLists", myYouTubeListByMemberIdx);
@@ -71,7 +71,7 @@ public class MainController {
     }
 
     @GetMapping("/listing")
-    public String getListing(HttpServletRequest request, @RequestParam String listId)
+    public String getListing(HttpServletRequest request, @RequestParam(required = false) String listId)
     {
         return "listing";
     }

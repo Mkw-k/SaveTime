@@ -71,6 +71,13 @@ public class MemberService {
 
     public boolean createMember(Member member) {
 
+        //최초 Role은 User로 설정
+        Role role = roleRepository.findByRoleName("ROLE_USER");
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+
+        member.setRole(roles);
+        member.setRemoteAddr((String) ContextUtil.getAttrFromSession("remoteAddr"));
         Member savedMember = loginRepository.save(member);
 
         if(savedMember != null){

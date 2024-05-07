@@ -234,10 +234,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 , "/favicon/**"
                 , "/firebase/**"
                 , "/firebase-messaging-sw.js"
-                , "/asset/**"
+                , "/assets/**"
                 , "/oauth2/authorization"
                 , "/modules"
                 , "/obj"
+
         );
 
     }

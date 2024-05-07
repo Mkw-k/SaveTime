@@ -256,7 +256,10 @@ public class YoutubeService {
     }
 
     public List<YoutubeList> getMyYouTubeListByMemberIdx(Member member) {
-        List<YoutubeList> dbYoutubeLists = youtubeListRepository.findByCreatedByIdxOrderByCreatedAtDesc(member.getIdx());
+        List<YoutubeList> dbYoutubeLists = new ArrayList<>();
+        if(member != null){
+            dbYoutubeLists = youtubeListRepository.findByCreatedByIdxOrderByCreatedAtDesc(member.getIdx());
+        }
         return dbYoutubeLists;
     }
 
