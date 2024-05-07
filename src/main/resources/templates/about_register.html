@@ -104,18 +104,19 @@
                         <div class="card">
                             <div class="card-body">
                                 <h3 class="text-center mb-4">Sign Up</h3>
-                                <form id="signupForm">
+                                <form id="signupForm" action="/users" method="post">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="fullname" placeholder="Full Name" required>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required>
+
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" class="form-control" id="email" placeholder="Email Address" required>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
                                     </div>
-                                    <div class="form-group">
+                                   <!-- <div class="form-group">
                                         <input type="text" class="form-control" id="username" placeholder="Username" required>
-                                    </div>
+                                    </div>-->
                                     <div class="form-group">
-                                        <input type="password" class="form-control" id="password" placeholder="Password" required>
+                                        <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
@@ -262,6 +263,43 @@
 		<!-- Jquery Plugins, main Jquery -->	
         <script src="assets/js/plugins.js"></script>
         <script src="assets/js/main.js"></script>
-        
+
+
+   <script>
+       function validateAndSignUp() {
+           var signupForm = document.getElementById('signupForm');
+           // 클라이언트 측 유효성 검사 예시
+           var name = document.getElementById('name').value;
+           var email = document.getElementById('email').value;
+           var password = document.getElementById('password').value;
+           var confirmPassword = document.getElementById('confirmPassword').value;
+
+           if(name === ''){
+               alert('이름을 입력해주세요!');
+               return;
+           }
+
+           if(name === ''){
+               alert('이메일을 입력해주세요!');
+               return;
+           }
+
+           if(password === ''){
+               alert('비밀번호를 입력해주세요!');
+               return;
+           }
+
+           // 간단한 유효성 검사: 비밀번호 일치 확인
+           if (password !== confirmPassword) {
+               alert('Passwords do not match!');
+               return;
+           }
+
+           signupForm.submit();
+
+           // 여기서 서버로 회원가입 데이터를 전송하거나 다른 작업 수행
+           alert('Sign up successful!\nName: ' + name + '\nEmail: ' + email);
+       }
+   </script>
     </body>
 </html>

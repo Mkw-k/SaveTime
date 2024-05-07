@@ -21,11 +21,39 @@
             <link rel="stylesheet" href="/assets/css/slick.css">
             <link rel="stylesheet" href="/assets/css/nice-select.css">
             <link rel="stylesheet" href="/assets/fonts/style.css">
+            <!-- Font Awesome 아이콘 라이브러리 링크 -->
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 
         <style>
             .logo{
                 width: 150px;
                 height: 36px;
+            }
+            /* 스타일링 */
+            .user-dropdown {
+                position: relative;
+                display: inline-block;
+            }
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: white; /* 하얀 배경 */
+                min-width: 120px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                border-radius: 5px; /* 모서리 둥글게 */
+                padding: 5px 0; /* 내부 여백 조정 */
+            }
+            .dropdown-content a {
+                color: green; /* 초록색 글자 */
+                padding: 10px 15px; /* 간격 조정 */
+                text-decoration: none;
+                display: block;
+                font-size: 14px; /* 글자 크기 조정 */
+            }
+            .dropdown-content a:hover {
+                background-color: #f2f2f2; /* 마우스 호버시 배경색 조정 */
             }
         </style>
    </head>
@@ -64,7 +92,7 @@
                                             <li><a href="index">Home</a></li>
                                             <!--<li><a href="about">About</a></li>
                                             <li><a href="catagori">Catagories</a></li>-->
-                                            <li><a href="listing">Listing</a></li>
+                                            <!--<li><a href="listing">Listing</a></li>-->
                                             <!--<li><a href="#">Page</a>
                                                 <ul class="submenu">
                                                     <li><a href="blog">Blog</a></li>
@@ -75,9 +103,34 @@
                                             </li>-->
                                             <li><a href="contact">Contact</a></li>
                                             <!--<li class="add-list"><a href="listing-details"><i class="ti-plus"></i> add Listing</a></li>-->
-                                            <li class="login"><a href="login">
+
+                                            <!-- <li class="login"><a href="login">
                                                 <i class="ti-user"></i> Sign in or Register</a>
+                                            </li>-->
+
+                                            <!-- 타임리프 템플릿을 사용하여 Spring Security 정보로 화면 제어 -->
+                                            <li class="login">
+                                                <!-- Spring Security의 인증 정보를 사용하여 로그인 상태에 따라 메시지 표시 -->
+                                                <div th:if="${#authorization.expression('isAuthenticated()')}">
+                                                    <!-- 인증된 사용자인 경우 -->
+                                                    <!-- 인증된 사용자 이름과 드롭다운 메뉴 -->
+                                                    <div class="user-dropdown" onclick="toggleDropdown()">
+                                                         <span style="color: blueviolet" th:text="'Welcome ' + ${#authentication.name}">
+                                                         </span>
+                                                         <i class="fas fa-caret-down" style="font-size: 1rem;"></i> <!-- Font Awesome 화살표 아이콘 -->
+                                                         <div class="dropdown-content" id="dropdownMenu">
+                                                            <a href="#" style="color: green;">정보 수정</a>
+                                                            <a href="/logout" style="color: green;">로그아웃</a>
+                                                         </div>
+                                                    </div>
+
+                                                </div>
+                                                <div th:unless="${#authorization.expression('isAuthenticated()')}">
+                                                    <!-- 인증되지 않은 사용자인 경우 -->
+                                                    <a href="/login"><i class="ti-user"></i> Sign in or Register</a>
+                                                </div>
                                             </li>
+
                                         </ul>
                                     </nav>
                                 </div>
@@ -104,7 +157,8 @@
                             <!-- Hero Caption -->
                             <div class="hero__caption">
                                 <span>Save Time</span>
-                                <h1>당신의 시간을 아껴줍니다</h1>
+                                <h1>당신의 시간을<br>
+                                    아껴드립니다</h1>
                             </div>
                             <!--Hero form -->
                             <form id="searchForm" action="/youtube/list" class="search-box" method="get">
@@ -500,9 +554,9 @@
                                     <h4>Quick Link</h4>
                                     <ul>
                                         <li><a href="/index">Home</a></li>
-                                        <li><a href="#">Listing</a></li>
-                                        <!--<li><a href="#">About</a></li>
-                                        <li><a href="#">Contact</a></li>-->
+                                        <!--<li><a href="#">Listing</a></li>-->
+                                        <!--<li><a href="#">About</a></li>-->
+                                        <li><a href="#">Contact</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -728,6 +782,18 @@
                     document.getElementById('searchForm').submit(); // 폼 서브밋
                 });
             });
+
+            /**
+             * 유저 아이디 클릭시 드롭다운
+             */
+            function toggleDropdown() {
+                var dropdownMenu = document.getElementById("dropdownMenu");
+                if (dropdownMenu.style.display === "block") {
+                    dropdownMenu.style.display = "none";
+                } else {
+                    dropdownMenu.style.display = "block";
+                }
+            }
 
         </script>
         

@@ -100,35 +100,34 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
-                        <!-- 회원가입 폼 -->
+                        <!-- 로그인 폼 -->
                         <div class="card">
                             <div class="card-body">
-                                <h3 class="text-center mb-4">Sign Up</h3>
-                                <form id="signupForm">
+                                <h3 class="text-center mb-4">Login</h3>
+                                <form onsubmit="submitForm(event)">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="fullname" placeholder="Full Name" required>
+                                        <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" class="form-control" id="email" placeholder="Email Address" required>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="username" placeholder="Username" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" id="password" placeholder="Password" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-block" onclick="validateAndSignUp()">Sign Up</button>
+                                    <button type="submit" class="btn btn-primary btn-block">Login</button>
                                 </form>
                                 <div class="text-center mt-3">
                                     <!-- 카카오 로그인 버튼 -->
-                                    <button class="btn btn-warning btn-block">카카오로 간편 로그인하기</button>
+                                    <!--<button class="btn btn-warning btn-block">Login with Kakao</button>-->
+                                    <a href="/oauth2/authorization/kakao" class="btn btn-warning btn-block">카카오톡으로 로그인</a><br>
                                 </div>
                                 <div class="text-center mt-3">
-                                    <!-- 이미 회원이신가요? 로그인 링크 -->
-                                    <p>If you already have an account, <a href="/login" style="color : blue">login here</a>.</p>
+                                    <!-- 아이디/비밀번호 찾기 링크 -->
+                                    <div>Forgot Username or Password?</div>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <!-- 회원가입 안내 문구 -->
+                                    <p>If you don't have an account, <a href="/users" style="color : blue">sign up here</a>.</p>
+                                    <!-- 아이디/비밀번호 찾기 링크 -->
+                                    <!--<p><a href="/find-username" style="color : blue">Forgot Username</a> | <a href="/reset-password" style="color : blue">Forgot Password</a></p>-->
+                                    <p><a href="#" style="color : blue">Forgot Username</a> | <a href="#" style="color : blue">Forgot Password</a></p>
                                 </div>
                             </div>
                         </div>
@@ -262,6 +261,53 @@
 		<!-- Jquery Plugins, main Jquery -->	
         <script src="assets/js/plugins.js"></script>
         <script src="assets/js/main.js"></script>
-        
+
+   <script>
+       function submitForm(event) {
+           event.preventDefault(); // 기본 제출 동작을 막음
+
+           const username = document.getElementById('username').value;
+           const password = document.getElementById('password').value;
+
+           // 여기서 입력 유효성 검증을 수행할 수 있음
+           if (username.trim() === '' || password.trim() === '') {
+               alert('Username and password are required.');
+               return;
+           }
+
+           const data = {
+               username: username,
+               password: password
+           };
+
+           // fetch를 사용하여 서버로 데이터 전송
+           fetch('/login', {
+               method: 'POST',
+               headers: {
+                   'Content-Type': 'application/json'
+               },
+               body: JSON.stringify(data)
+           })
+               .then(response => {
+                   if (response.ok) {
+                       return response.text();
+                   } else {
+                       throw new Error('Login failed');
+                   }
+               })
+               .then(token => {
+                   // 로그인 성공 시 처리
+                   console.log('Token:', token);
+                   alert('Login successful!');
+                   // 성공적으로 로그인 후 필요한 작업 수행
+                   location.href = '/';
+               })
+               .catch(error => {
+                   // 로그인 실패 시 처리
+                   console.error('Login failed:', error.message);
+                   alert('Login failed. Please check your credentials.');
+               });
+       }
+   </script>
     </body>
 </html>

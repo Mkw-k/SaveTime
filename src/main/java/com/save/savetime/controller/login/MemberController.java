@@ -2,28 +2,35 @@ package com.save.savetime.controller.login;
 
 import com.save.savetime.common.AuthMember;
 import com.save.savetime.model.dto.MemberAccount;
+import com.save.savetime.model.dto.UserDto;
 import com.save.savetime.model.entity.Member;
 import com.save.savetime.model.entity.YoutubeList;
+import com.save.savetime.repository.RoleRepository;
 import com.save.savetime.service.MemberService;
 import com.save.savetime.service.YoutubeService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class LoginController {
+public class MemberController {
     private final MemberService memberService;
     private final YoutubeService youtubeService;
-
+    private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     @GetMapping(value = {"/certify/{mode}", "/certify/{mode}/{id}"})
     public String afterCertifyAction(HttpServletRequest request, Model model) throws Exception {
@@ -35,8 +42,6 @@ public class LoginController {
             return "main";
         }
     }
-
-
 
     @GetMapping({"/login-success"})
     public String loginSuccess(Model model, @AuthMember Member member) throws Exception {
@@ -66,12 +71,57 @@ public class LoginController {
         return "user/login/denied";
     }
 
-    @RequestMapping(value="/login")
+    @RequestMapping(value="/login", method = RequestMethod.GET)
     public String login(@RequestParam(value = "error", required = false) String error,
                         @RequestParam(value = "exception", required = false) String exception, Model model){
         model.addAttribute("error",error);
         model.addAttribute("exception",exception);
-        return "login";
+        return "about_login";
     }
+
+    @GetMapping(value="/users")
+    public String createUser() throws Exception {
+
+        return "about_register";
+    }
+
+    /**
+     * 회원가입
+     * @param accountDto
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value="/users")
+    public String createUser(@Valid UserDto accountDto, Errors errors, HttpServletRequest request) throws Exception {
+        if(errors.hasErrors()){
+            return "redirect:/500";
+        }
+        ModelMapper modelMapper = new ModelMapper();
+        Member account = modelMapper.map(accountDto, Member.class);
+        account.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+
+        boolean registerSuccessBool = memberService.createMember(account);
+
+        //실패시
+        if(!registerSuccessBool){
+            return "redirect:/500";
+        }
+
+        return "redirect:/login";
+    }
+
+    ////////////////////////////////////하단은 테스트 url///////////////////////////////////////////////////////
+    @GetMapping(value="/mypage")
+    public String myPage(@AuthenticationPrincipal Member account, Authentication authentication, Principal principal) throws Exception {
+
+        return "user/mypage";
+    }
+
+    @GetMapping(value="/messages")
+    public String messages() throws Exception {
+
+        return "user/messages";
+    }
+
 
 }
