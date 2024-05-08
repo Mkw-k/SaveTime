@@ -9,11 +9,11 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTubeRequestInitializer;
-import com.google.api.services.youtube.model.PlaylistItem;
-import com.google.api.services.youtube.model.PlaylistItemListResponse;
+import com.google.api.services.youtube.model.*;
 import com.google.common.collect.Lists;
 import com.save.savetime.common.Constants;
 import com.save.savetime.model.dto.PlaylistDTO;
+import com.save.savetime.model.dto.YoutubeDTO;
 import com.save.savetime.model.dto.YoutubeListDTO;
 import com.save.savetime.model.entity.Member;
 import com.save.savetime.model.entity.YoutubeList;
@@ -57,18 +57,18 @@ public class YoutubeService {
 
     private static YouTube youtube;
 
-    private static final String APPLICATION_NAME = "My First Project";
+    private static final String APPLICATION_NAME = "SaveTime";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
 
 
-    public List<YoutubeList> getMyPlayListByYouTubeApiAndSaveDB(String token) throws Exception {
-        List<YoutubeList> youtubeLists = new ArrayList<>();
+    public List<YoutubeListDTO> getMyPlayListByYouTubeApiAndSaveDB(String token) throws Exception {
+        List<YoutubeListDTO> youtubeListDTOS = new ArrayList<>();
 
         // YouTube Data API의 URL
         String apiUrl = YOUTUBE_API_URL + Constants.YoutubeEndPointUrl.playlist.getUrl();
 
-        // OAuth 2.0 토큰 (이 부분을 실제 토큰으로 대체해L야 합니다)
+        // OAuth 2.0 토큰
         String accessToken = token;
         log.debug("token 확인 >>> {}", accessToken);
 
@@ -117,22 +117,29 @@ public class YoutubeService {
                     .memberId(SecurityContextHolder.getContext().getAuthentication().getName())
                     .build();
 
-            //먼저 이미 있는 재생목록인지 확인 : 있으면 리스트에 넣고 건너뜀
-            log.debug("이미 있는재생목록인지 확인 >>>");
-            YoutubeList byListIdAndChannelId = youtubeListRepository.findByListIdAndChannelId(children.get("id").toString().replaceAll("\"", ""), children.get("snippet").get("channelId").toString().replaceAll("\"", ""));
-            if(byListIdAndChannelId != null){
-                log.debug("있는 목록임!! >> ");
-                youtubeLists.add(byListIdAndChannelId);
-            }else{
-                log.debug("없는 목록임!! >> ");
-                // 저장 시도
-                YoutubeList savedYoutubeList = youtubeListRepository.save(youtubeList);
-                // 저장에 성공한 경우에만 리스트에 추가
-                youtubeLists.add(savedYoutubeList);
-            }
+            saveDbAndAddList(youtubeListDTOS, children.get("id").toString().replaceAll("\"", ""), children.get("snippet").get("channelId").toString().replaceAll("\"", ""), youtubeList);
         }
 
-        return youtubeLists;
+        return youtubeListDTOS;
+    }
+
+    private void saveDbAndAddList(List<YoutubeListDTO> youtubeLists, String listId, String channelId, YoutubeList youtubeList) {
+        ModelMapper modelMapper = new ModelMapper();
+        //먼저 이미 있는 재생목록인지 확인 : 있으면 리스트에 넣고 건너뜀
+        log.debug("이미 있는재생목록인지 확인 >>>");
+        YoutubeList byListIdAndChannelId = youtubeListRepository.findByListIdAndChannelId(listId, channelId);
+        if(byListIdAndChannelId != null){
+            log.debug("있는 목록임!! >> ");
+            YoutubeListDTO youtubeListDTO = modelMapper.map(byListIdAndChannelId, YoutubeListDTO.class);
+            youtubeLists.add(youtubeListDTO);
+        }else{
+            log.debug("없는 목록임!! >> ");
+            // 저장 시도
+            YoutubeList savedYoutubeList = youtubeListRepository.save(youtubeList);
+            // 저장에 성공한 경우에만 리스트에 추가
+            YoutubeListDTO youtubeListDTO = modelMapper.map(savedYoutubeList, YoutubeListDTO.class);
+            youtubeLists.add(youtubeListDTO);
+        }
     }
 
     private String getThumbUrl(JsonNode thumbnailsNode) {
@@ -151,42 +158,26 @@ public class YoutubeService {
         return thumbUrl;
     }
 
-    public List<String> getMyYouTubeByListId(String listId){
+    public List<YoutubeDTO> getMyYouTubeByListId(String listId){
         String playlistId = listId;
-        ArrayList<String> videoIdList = new ArrayList<>();
 
         try {
-            List<PlaylistItem> playlistItems = fetchVideosFromPlaylist(playlistId);
-            for (PlaylistItem playlistItem : playlistItems) {
-                System.out.println("Video ID: " + playlistItem.getContentDetails().getVideoId());
+            List<YoutubeDTO> playlistItems = fetchVideosFromPlaylist(playlistId);
+
+            /*for (YoutubeDTO playlistItem : playlistItems) {
+                log.info("Video ID: {}", playlistItem.getVideoId());
                 videoIdList.add(playlistItem.getContentDetails().getVideoId());
-            }
+            }*/
+            return playlistItems;
         } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();
         }
 
-        return videoIdList;
-    }
-
-    // YouTube Data API 서비스 초기화
-    private static YouTube getService() throws GeneralSecurityException, IOException {
-        return new YouTube.Builder(new NetHttpTransport(), new JacksonFactory(), null)
-                .setApplicationName(APPLICATION_NAME)
-                .setYouTubeRequestInitializer(new YouTubeRequestInitializer(YOUTUBE_API_KEY))
-                .build();
-
-
-        /*return new YouTube.Builder(
-                GoogleNetHttpTransport.newTrustedTransport(),
-                JSON_FACTORY,
-                null
-        )
-                .setApplicationName(APPLICATION_NAME)
-                .build();*/
+        return null;
     }
 
     // 재생목록에 속한 동영상 ID 가져오기
-    public static List<PlaylistItem> fetchVideosFromPlaylist(String playlistId) throws GeneralSecurityException, IOException {
+    public static List<YoutubeDTO> fetchVideosFromPlaylist(String playlistId) throws GeneralSecurityException, IOException {
         //YouTube youtubeService = getService();
         // This OAuth 2.0 access scope allows for read-only access to the
         // authenticated user's account, but not other types of account access.
@@ -229,12 +220,11 @@ public class YoutubeService {
         } while (nextToken != null);
 
         // Prints information about the results.
-        prettyPrint(playlistItemList.size(), playlistItemList.iterator());
-
+        List<YoutubeDTO> youtubeDTOS = prettyPrintAndPlaylistItemParsingDTO(playlistItemList.size(), playlistItemList.iterator());
 
         //PlaylistItemListResponse response = request.execute();
         //return response.getItems();
-        return null;
+        return youtubeDTOS;
     }
 
     /*
@@ -244,21 +234,130 @@ public class YoutubeService {
      *
      * @param iterator of Playlist Items from uploaded Playlist
      */
-    private static void prettyPrint(int size, Iterator<PlaylistItem> playlistEntries) {
+    private static List<YoutubeDTO> prettyPrintAndPlaylistItemParsingDTO(int size, Iterator<PlaylistItem> playlistEntries) {
+        List<YoutubeDTO> youtubeDTOS = new ArrayList<>();
+
         System.out.println("=============================================================");
         System.out.println("\t\tTotal Videos Uploaded: " + size);
         System.out.println("=============================================================\n");
 
         while (playlistEntries.hasNext()) {
+            YoutubeDTO youtubeDTO = new YoutubeDTO();
+
             PlaylistItem playlistItem = playlistEntries.next();
             System.out.println(" video name  = " + playlistItem.getSnippet().getTitle());
             System.out.println(" video id    = " + playlistItem.getContentDetails().getVideoId());
             System.out.println(" upload date = " + playlistItem.getSnippet().getPublishedAt());
             System.out.println("\n-------------------------------------------------------------\n");
+
+            youtubeDTO.setTitle(playlistItem.getSnippet().getTitle());
+            youtubeDTO.setVideoId(playlistItem.getContentDetails().getVideoId());
+            youtubeDTO.setPublishedAt(playlistItem.getSnippet().getPublishedAt());
+            youtubeDTOS.add(youtubeDTO);
         }
+
+        return youtubeDTOS;
     }
 
-    public List<YoutubeListDTO> getMyYouTubeListByMemberIdx(Member member) {
+    /**
+     * 유튜브 재생목록 불러오기
+     * @return
+     * @throws GeneralSecurityException
+     * @throws IOException
+     */
+    public List<YoutubeListDTO> getMyPlayListIdForAPI() throws GeneralSecurityException, IOException {
+        List<YoutubeListDTO> youtubeListDTOS = new ArrayList<>();
+        YouTube youtubeService = initializeYouTube();
+
+        // 요청할 결과 수 설정
+        int maxResults = 50; // 최대 10개의 플레이리스트 가져오기
+
+        // 사용자의 플레이리스트 목록 가져오기
+        List<Playlist> playlists = getPlaylists(youtubeService, maxResults);
+
+        // 가져온 플레이리스트 목록 출력
+        if (playlists != null) {
+            System.out.println("Total Playlists: " + playlists.size());
+            for (Playlist playlist : playlists) {
+                System.out.println("Playlist ID: " + playlist.getId());
+                System.out.println("Playlist Title: " + playlist.getSnippet().getTitle());
+                System.out.println("----------------------------------------");
+
+                DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+                ZonedDateTime zonedDateTime = ZonedDateTime.parse(playlist.getSnippet().getPublishedAt().toString(), formatter);
+
+                YoutubeList youtubeList = YoutubeList.builder()
+                        .listTitle(playlist.getSnippet().getTitle())
+                        .listId(playlist.getId())
+                        .thumbUrl(getThumbUrlByObj(playlist.getSnippet().getThumbnails()))
+                        .owner(playlist.getSnippet().getChannelTitle())
+                        .youtubeListUpdateDate(zonedDateTime)
+                        .channelId(playlist.getSnippet().getChannelId())
+                        .memberId(null) //TODO 나중에 멤버아이디 추가할것!!
+                        .build();
+
+                saveDbAndAddList(youtubeListDTOS, playlist.getId(), playlist.getSnippet().getChannelId(), youtubeList);
+            }
+        } else {
+            System.out.println("No playlists found.");
+        }
+
+        return youtubeListDTOS;
+    }
+
+    private String getThumbUrlByObj(ThumbnailDetails thumbnailDetails) {
+        String thumbUrl = "";
+
+        if(thumbnailDetails.getMaxres() != null){
+            thumbUrl = thumbnailDetails.getMaxres().getUrl().toString().replaceAll("\"", "");
+        }else if(thumbnailDetails.getHigh() != null){
+            thumbUrl = thumbnailDetails.getHigh().getUrl().toString().replaceAll("\"", "");
+        }else if(thumbnailDetails.getMedium() != null){
+            thumbUrl = thumbnailDetails.getMedium().getUrl().toString().replaceAll("\"", "");
+        }else if(thumbnailDetails.getStandard() != null){
+            thumbUrl = thumbnailDetails.getStandard().getUrl().toString().replaceAll("\"", "");
+        }else{
+            thumbUrl = thumbnailDetails.getDefault().getUrl().toString().replaceAll("\"", "");
+        }
+
+        return thumbUrl;
+    }
+
+    // YouTube Data API 초기화
+    private YouTube initializeYouTube() throws GeneralSecurityException, IOException {
+        /*return new YouTube.Builder(
+                GoogleNetHttpTransport.newTrustedTransport(),
+                JSON_FACTORY,
+                null)
+                .setApplicationName(APPLICATION_NAME)
+                .build();
+        */
+
+        List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.readonly");
+
+        // Authorize the request.
+        Credential credential = Auth.authorize(scopes, "myuploads");
+
+        // This object is used to make YouTube Data API requests.
+        /*youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential).setApplicationName(
+                "youtube-cmdline-myuploads-sample").build();*/
+        youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, JSON_FACTORY, credential).setApplicationName(
+                APPLICATION_NAME).build();
+
+        return youtube;
+    }
+
+    // 사용자의 플레이리스트 목록 가져오기
+    private static List<Playlist> getPlaylists(YouTube youtubeService, int maxResults) throws IOException {
+        YouTube.Playlists.List request = youtubeService.playlists().list("snippet");
+        request.setMine(true); // 현재 인증된 사용자의 플레이리스트 목록 요청
+        request.setMaxResults((long) maxResults); // 요청할 최대 결과 수 설정
+
+        PlaylistListResponse response = request.execute();
+        return response.getItems();
+    }
+
+    public List<YoutubeListDTO> getMyYouTubeListByMemberIdxAtDB(Member member) {
         List<YoutubeList> dbYoutubeLists = new ArrayList<>();
         if(member != null){
             dbYoutubeLists = youtubeListRepository.findByCreatedByIdxOrderByCreatedAtDesc(member.getIdx());
@@ -272,7 +371,7 @@ public class YoutubeService {
         return youtubeListDTOs;
     }
 
-    public List<YoutubeList> getMyYouTubeListByListId(String listId, long memberIdx){
+    public List<YoutubeList> getMyYouTubeListByListIdAtDB(String listId, long memberIdx){
         List<YoutubeList> youtubeLists = new ArrayList<>();
         if(listId.equals("all")){
             youtubeLists = youtubeListRepository.findByCreatedByIdxOrderByCreatedAtDesc(memberIdx);

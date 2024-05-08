@@ -3,6 +3,7 @@ package com.save.savetime.controller;
 import com.save.savetime.common.AuthMember;
 import com.save.savetime.model.dto.SearchYoutubeListReqDTO;
 import com.save.savetime.model.dto.YouTubeListApiReqDTO;
+import com.save.savetime.model.dto.YoutubeListDTO;
 import com.save.savetime.model.entity.Member;
 import com.save.savetime.model.entity.YoutubeList;
 import com.save.savetime.repository.YoutubeListRepository;
@@ -37,7 +38,7 @@ public class YoutubeController {
 
     @PostMapping
     public ResponseEntity getMyPlayListByYouTubeApi(@Valid YouTubeListApiReqDTO requestDTO, Errors errors){
-        List<YoutubeList> playlists = new ArrayList<>();
+        List<YoutubeListDTO> playlists = new ArrayList<>();
 
         if(errors.hasErrors()){
             return ResponseEntity.badRequest().body(errors);
@@ -45,7 +46,9 @@ public class YoutubeController {
 
         try {
             // YouTube API를 통해 재생목록을 가져옴
-            playlists = youTubeService.getMyPlayListByYouTubeApiAndSaveDB(requestDTO.getToken());
+            //playlists = youTubeService.getMyPlayListByYouTubeApiAndSaveDB(requestDTO.getToken());
+            playlists = youTubeService.getMyPlayListIdForAPI();
+
             // 유효성 검사 수행
 //            listValidator.validateReturnedLists(playlists, errors);
 
@@ -69,7 +72,7 @@ public class YoutubeController {
         String query = searchFormDTO.getQuery();
         String listId = searchFormDTO.getListId();
 
-        List<YoutubeList> myYouTubeListByListId = youTubeService.getMyYouTubeListByListId(listId, member.getIdx());
+        List<YoutubeList> myYouTubeListByListId = youTubeService.getMyYouTubeListByListIdAtDB(listId, member.getIdx());
         model.addAttribute("dbYoutubeLists", myYouTubeListByListId);
 
         return "index";

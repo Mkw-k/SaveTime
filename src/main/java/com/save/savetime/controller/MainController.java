@@ -28,7 +28,7 @@ public class MainController {
     public String getMain(@AuthMember Member member, Model model){
         //log.debug("아이디 >>> {}", member.getEmail());
         //본인의 유튜브 리스트 받아오기
-        List<YoutubeListDTO> myYouTubeListByMemberIdx = youtubeService.getMyYouTubeListByMemberIdx(member);
+        List<YoutubeListDTO> myYouTubeListByMemberIdx = youtubeService.getMyYouTubeListByMemberIdxAtDB(member);
         model.addAttribute("dbYoutubeLists", myYouTubeListByMemberIdx);
 
         return "index";

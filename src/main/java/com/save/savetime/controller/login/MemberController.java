@@ -46,7 +46,7 @@ public class MemberController {
     @GetMapping({"/login-success"})
     public String loginSuccess(Model model, @AuthMember Member member) throws Exception {
         //하디마 유튜브 페이지로 이동
-        List<YoutubeListDTO> dbYoutubeLists = youtubeService.getMyYouTubeListByMemberIdx(member);
+        List<YoutubeListDTO> dbYoutubeLists = youtubeService.getMyYouTubeListByMemberIdxAtDB(member);
         model.addAttribute("dbYoutubeLists", dbYoutubeLists);
 
         return "index";
