@@ -12,6 +12,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.DataStore;
 import com.google.api.client.util.store.FileDataStoreFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.util.List;
 /**
  * Shared class used by every sample. Contains methods for authorizing a user and caching credentials.
  */
+@Slf4j
 public class Auth {
 
     /**
@@ -54,7 +56,7 @@ public class Auth {
         // Checks that the defaults have been replaced (Default = "Enter X here").
         if (clientSecrets.getDetails().getClientId().startsWith("Enter")
                 || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-            System.out.println(
+            log.info(
                     "Enter Client ID and Secret from https://console.developers.google.com/project/_/apiui/credential "
                             + "into src/main/resources/client_secrets.json");
             System.exit(1);
@@ -69,9 +71,9 @@ public class Auth {
                 .build();
 
         // Build the local server and bind it to port 8080
-        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
+        //LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
 
         // Authorize.
-        return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
+        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 }
