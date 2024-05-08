@@ -29,9 +29,8 @@ public class Role implements Serializable {
     @Column(name = "role_desc")
     private String roleDesc;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
     @ToString.Exclude
-    @JoinColumn(name = "idx")
     private Member member;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "role")

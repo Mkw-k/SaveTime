@@ -46,7 +46,7 @@
             <option th:each="role : ${roleList}"
                     th:value="${role.roleName}"
                     th:text="${role.roleName}"
-                    th:selected="${account != null && role.roleName.equals(account.getRoleName())}"/>
+                    th:selected="${account != null && !account.getRoles().isEmpty() && role.roleName.equals(account.roles.get(0))}"/>
           </select>
         </div>
       </div>
