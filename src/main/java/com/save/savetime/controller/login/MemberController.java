@@ -3,8 +3,8 @@ package com.save.savetime.controller.login;
 import com.save.savetime.common.AuthMember;
 import com.save.savetime.model.dto.MemberAccount;
 import com.save.savetime.model.dto.UserDto;
+import com.save.savetime.model.dto.YoutubeListDTO;
 import com.save.savetime.model.entity.Member;
-import com.save.savetime.model.entity.YoutubeList;
 import com.save.savetime.repository.RoleRepository;
 import com.save.savetime.service.MemberService;
 import com.save.savetime.service.YoutubeService;
@@ -46,7 +46,7 @@ public class MemberController {
     @GetMapping({"/login-success"})
     public String loginSuccess(Model model, @AuthMember Member member) throws Exception {
         //하디마 유튜브 페이지로 이동
-        List<YoutubeList> dbYoutubeLists = youtubeService.getMyYouTubeListByMemberIdx(member);
+        List<YoutubeListDTO> dbYoutubeLists = youtubeService.getMyYouTubeListByMemberIdxAtDB(member);
         model.addAttribute("dbYoutubeLists", dbYoutubeLists);
 
         return "index";

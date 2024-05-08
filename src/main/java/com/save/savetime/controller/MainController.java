@@ -1,8 +1,8 @@
 package com.save.savetime.controller;
 
 import com.save.savetime.common.AuthMember;
+import com.save.savetime.model.dto.YoutubeListDTO;
 import com.save.savetime.model.entity.Member;
-import com.save.savetime.model.entity.YoutubeList;
 import com.save.savetime.service.YoutubeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class MainController {
     public String getMain(@AuthMember Member member, Model model){
         //log.debug("아이디 >>> {}", member.getEmail());
         //본인의 유튜브 리스트 받아오기
-        List<YoutubeList> myYouTubeListByMemberIdx = youtubeService.getMyYouTubeListByMemberIdx(member);
+        List<YoutubeListDTO> myYouTubeListByMemberIdx = youtubeService.getMyYouTubeListByMemberIdxAtDB(member);
         model.addAttribute("dbYoutubeLists", myYouTubeListByMemberIdx);
 
         return "index";

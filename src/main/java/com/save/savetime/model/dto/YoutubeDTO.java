@@ -1,6 +1,7 @@
 package com.save.savetime.model.dto;
 
-import lombok.*;
+import com.google.api.client.util.DateTime;
+import lombok.Data;
 
 @Data
 public class YoutubeDTO {
@@ -11,4 +12,5 @@ public class YoutubeDTO {
     private String videoUrl;
 
     private String videoId;
+    private DateTime publishedAt;
 }

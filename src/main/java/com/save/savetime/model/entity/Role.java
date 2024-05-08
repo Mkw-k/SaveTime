@@ -31,16 +31,16 @@ public class Role implements Serializable {
 
     @ManyToOne
     @ToString.Exclude
-    private Member members;
+    private Member member;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "role")
     @ToString.Exclude
-    private Set<ResourcesRole> resourcesRole = new HashSet<>();
+    private Set<ResourcesRole> resourcesRoles = new HashSet<>();
 
-    public void addResourcesRole(ResourcesRole...resourcesRole){
-        Collections.addAll(this.resourcesRole, resourcesRole);
+    public void addResourcesRole(ResourcesRole... resourcesRole) {
+        Collections.addAll(this.resourcesRoles, resourcesRole);
     }
-
 }
+
 
 

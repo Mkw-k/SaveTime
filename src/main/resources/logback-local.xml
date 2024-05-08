@@ -9,12 +9,21 @@
         <!--<File name="file" fileName="./logs/save-time.log" append="false">
             <PatternLayout pattern="%d %5p %m%n"/>
         </File>-->
+        <!-- logstash spec -->
+    <!--    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+            <destination>127.0.0.1:5000</destination>
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            </encoder>
+        </appender>-->
+
+
     </Appenders>
 
     <loggers>
         <root level="info" additivity="true">
             <AppenderRef ref="console"/>
             <AppenderRef ref="file" />
+            <!--<AppenderRef ref="LOGSTASH"/>-->
         </root>
     </loggers>
 

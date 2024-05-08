@@ -48,7 +48,8 @@ public class UserManagerController {
 		modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
 		Member member = modelMapper.map(userDto, Member.class);
 
-		member.setEmail(userDto.getName());
+		member.setEmail(userDto.getEmail());
+
 		if(!userDto.getPassword().isEmpty()){
 			member.setPassword(userDto.getPassword());
 		}

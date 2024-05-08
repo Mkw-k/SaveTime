@@ -40,10 +40,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
     implementation 'org.seleniumhq.selenium:selenium-java'
     implementation 'org.seleniumhq.selenium:selenium-chrome-driver'
-    implementation 'com.google.apis:google-api-services-youtube:v3-rev20240310-2.0.0'
+
     implementation 'com.fasterxml.jackson.core:jackson-core:2.15.3'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.3'
-    implementation 'com.google.api-client:google-api-client:1.31.1'
+
     implementation 'mysql:mysql-connector-java:8.0.27'
     implementation 'org.springframework.boot:spring-boot-starter-security'// security
     implementation 'org.springframework.security:spring-security-oauth2-client:5.7.1'
@@ -56,24 +56,37 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation' //Validation
     implementation 'com.google.guava:guava:31.0.1-jre'
 
-    // Google API Client Library
-    implementation 'com.google.api-client:google-api-client:1.32.1'
-    // Google OAuth Client Library for Java (Java 8)
-    //implementation 'com.google.oauth-client:google-oauth-client-java8:1.32.1'
-    implementation 'com.google.http-client:google-http-client-jackson2:1.32.1'
-    implementation 'com.google.collections:google-collections:1.0'
-    implementation 'com.google.oauth-client:google-oauth-client-jetty:1.20.0'
-    implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.4'
-    implementation 'com.google.apis:google-api-services-youtube:v3-rev182-1.22.0'
+    //implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.4'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
     // Spring Security Test 의존성 추가
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'ch.qos.logback:logback-classic:1.2.6'
+
+
+    // Google API Client Library
+    implementation 'com.google.api-client:google-api-client:1.22.0'
+
+    // YouTube Data V3 support
+    implementation 'com.google.apis:google-api-services-youtube:v3-rev182-1.22.0'
+
+    // Required for any code that makes calls to the YouTube Analytics API
+    implementation 'com.google.apis:google-api-services-youtubeAnalytics:v1-rev63-1.22.0'
+
+    // Required for any code that makes calls to the YouTube Reporting API
+    implementation 'com.google.apis:google-api-services-youtubereporting:v1-rev10-1.22.0'
+
+    // This dependency is only used for the Topics API sample, which requires the Jackson JSON parser
+    implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.4'
+
+    implementation 'com.google.http-client:google-http-client-jackson2:1.20.0'
+    implementation 'com.google.oauth-client:google-oauth-client-jetty:1.20.0'
+    implementation 'com.google.collections:google-collections:1.0'
 
 }
 

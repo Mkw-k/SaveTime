@@ -1,6 +1,8 @@
 package com.save.savetime.service;
 
 import com.save.savetime.config.BaseTest;
+import com.save.savetime.model.dto.YoutubeDTO;
+import com.save.savetime.model.dto.YoutubeListDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,10 +12,22 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
+/**
+ *      // 1. 구글 Autorize 처리
+ *
+ *     // 2. 유튜브 리스트Id 불러오기
+ *
+ *
+ *
+ *     // 4. 나중에 볼 동영상
+ *
+ *     // 5. 특정 채널 안에 있는 리스트 Id 불러오기
+ */
 class YouTubeServiceTest extends BaseTest {
     @Autowired
     YoutubeService youTubeService;
 
+    // 3. 유튜브 리스트 안에 있는 재생목록 정보 불러오기(파라미터 : listId)
     @Test
     @DisplayName("유튜브 재생목록에 들어있는 videoId들을 불러온다.")
     public void getMyYouTubeListByIdTest(){
@@ -22,10 +36,10 @@ class YouTubeServiceTest extends BaseTest {
         String listId = "PLb6eUvuqyLCGqOrKsNiwal5aqPu-QaKBH";
 
         //when
-        List<String> myYouTubeListById = youTubeService.getMyYouTubeByListId(listId);
+        List<YoutubeDTO> myYouTubeListById = youTubeService.getMyYouTubeByListId(listId);
 
-        //then
-        Assertions.assertTrue(myYouTubeListById.isEmpty(), "리스트가 비어 있습니다.");
+        //then : 내용물이 있다!
+        Assertions.assertTrue(!myYouTubeListById.isEmpty(), "리스트가 있습니다.");
     }
 
     @Test
@@ -40,5 +54,19 @@ class YouTubeServiceTest extends BaseTest {
 
         //then
         //none
+    }
+
+    @Test
+    @DisplayName("유튜브 재생목록 불러오기 By All JAVA Logic2")
+    public void getYoutubeListSampleTest2() throws GeneralSecurityException, IOException {
+
+        //given
+        //none
+
+        //when
+        List<YoutubeListDTO> myPlayListIdForAPI = youTubeService.getMyPlayListIdForAPI();
+
+        //then : 내용물이 있다!
+        Assertions.assertTrue(!myPlayListIdForAPI.isEmpty(), "리스트가 있습니다.");
     }
 }
