@@ -29,18 +29,19 @@ public class Role implements Serializable {
     @Column(name = "role_desc")
     private String roleDesc;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @ToString.Exclude
-    private Member members;
+    @JoinColumn(name = "idx")
+    private Member member;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "role")
     @ToString.Exclude
-    private Set<ResourcesRole> resourcesRole = new HashSet<>();
+    private Set<ResourcesRole> resourcesRoles = new HashSet<>();
 
-    public void addResourcesRole(ResourcesRole...resourcesRole){
-        Collections.addAll(this.resourcesRole, resourcesRole);
+    public void addResourcesRole(ResourcesRole... resourcesRole) {
+        Collections.addAll(this.resourcesRoles, resourcesRole);
     }
-
 }
+
 
 

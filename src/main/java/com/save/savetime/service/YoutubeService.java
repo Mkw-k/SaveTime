@@ -14,11 +14,13 @@ import com.google.api.services.youtube.model.PlaylistItemListResponse;
 import com.google.common.collect.Lists;
 import com.save.savetime.common.Constants;
 import com.save.savetime.model.dto.PlaylistDTO;
+import com.save.savetime.model.dto.YoutubeListDTO;
 import com.save.savetime.model.entity.Member;
 import com.save.savetime.model.entity.YoutubeList;
 import com.save.savetime.repository.YoutubeListRepository;
 import com.save.savetime.util.YoutubeUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,6 +38,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -255,12 +258,18 @@ public class YoutubeService {
         }
     }
 
-    public List<YoutubeList> getMyYouTubeListByMemberIdx(Member member) {
+    public List<YoutubeListDTO> getMyYouTubeListByMemberIdx(Member member) {
         List<YoutubeList> dbYoutubeLists = new ArrayList<>();
         if(member != null){
             dbYoutubeLists = youtubeListRepository.findByCreatedByIdxOrderByCreatedAtDesc(member.getIdx());
         }
-        return dbYoutubeLists;
+
+        ModelMapper modelMapper = new ModelMapper();
+        List<YoutubeListDTO> youtubeListDTOs = dbYoutubeLists.stream()
+                .map(youtubeList -> modelMapper.map(youtubeList, YoutubeListDTO.class))
+                .collect(Collectors.toList());
+
+        return youtubeListDTOs;
     }
 
     public List<YoutubeList> getMyYouTubeListByListId(String listId, long memberIdx){

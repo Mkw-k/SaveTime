@@ -17,8 +17,8 @@ import java.io.Serializable;
 public class AccessIp implements Serializable {
 
     @Id
-    @GeneratedValue
-    @Column(name = "IP_ID", unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "IP_ID", nullable = false)
     private Long id;
 
     @Column(name = "IP_ADDRESS", nullable = false)
