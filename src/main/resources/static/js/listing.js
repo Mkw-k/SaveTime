@@ -282,3 +282,15 @@ function getAccessTokenFromCookie() {
     }
     return null;
 }
+
+/**
+ * 유저 아이디 클릭시 드롭다운
+ */
+function toggleDropdown() {
+    var dropdownMenu = document.getElementById("dropdownMenu");
+    if (dropdownMenu.style.display === "block") {
+        dropdownMenu.style.display = "none";
+    } else {
+        dropdownMenu.style.display = "block";
+    }
+}
