@@ -34,7 +34,7 @@ public class MainController {
         return "index";
     }
 
-    @RequestMapping(value = {"/callback"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/callback", "/Callback"}, method = RequestMethod.GET)
     public String handleCallback(HttpServletRequest request) {
         log.info("callback 함수 호출!!");
         return "index";
