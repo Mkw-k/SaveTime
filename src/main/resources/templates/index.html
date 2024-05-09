@@ -114,7 +114,7 @@
                                                 <div th:if="${#authorization.expression('isAuthenticated()')}">
                                                     <!-- 인증된 사용자인 경우 -->
                                                     <!-- 인증된 사용자 이름과 드롭다운 메뉴 -->
-                                                    <div class="user-dropdown" onclick="toggleDropdown()">
+                                                    <div class="user-dropdown" id="user_drop_down" onclick="toggleDropdown()">
                                                          <span style="color: blueviolet" th:text="'Welcome ' + ${#authentication.name}">
                                                          </span>
                                                          <i class="fas fa-caret-down" style="font-size: 1rem;"></i> <!-- Font Awesome 화살표 아이콘 -->
@@ -795,6 +795,8 @@
                     dropdownMenu.style.display = "block";
                 }
             }
+
+            document.getElementById('user_drop_down').addEventListener('touchstart', toggleDropdown);
 
         </script>
         

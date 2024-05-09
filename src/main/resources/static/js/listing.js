@@ -294,3 +294,5 @@ function toggleDropdown() {
         dropdownMenu.style.display = "block";
     }
 }
+
+document.getElementById('user_drop_down').addEventListener('touchstart', toggleDropdown);
