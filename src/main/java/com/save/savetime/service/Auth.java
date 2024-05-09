@@ -71,10 +71,10 @@ public class Auth {
                 .build();
 
         // Build the local server and bind it to port 8080
-        //LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(55256).build();
+        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(61576).build();
 
         // Authorize.
-        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+        return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
         //return new CustomAuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
     }
 }
