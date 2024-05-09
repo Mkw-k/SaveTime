@@ -43,7 +43,7 @@ public class Member {
     @Column(name = "del")
     private String del;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "member")
     private Set<Role> role = new HashSet<>();
 
     @PrePersist
