@@ -18,6 +18,7 @@ import com.save.savetime.model.dto.YoutubeListDTO;
 import com.save.savetime.model.entity.Member;
 import com.save.savetime.model.entity.YoutubeList;
 import com.save.savetime.repository.YoutubeListRepository;
+import com.save.savetime.util.Auth;
 import com.save.savetime.util.YoutubeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
