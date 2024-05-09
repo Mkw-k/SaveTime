@@ -46,8 +46,8 @@ public class YoutubeController {
 
         try {
             // YouTube API를 통해 재생목록을 가져옴
-            //playlists = youTubeService.getMyPlayListByYouTubeApiAndSaveDB(requestDTO.getToken());
-            playlists = youTubeService.getMyPlayListIdForAPI();
+            playlists = youTubeService.getMyPlayListByYouTubeApiAndSaveDB(requestDTO.getToken());
+            //playlists = youTubeService.getMyPlayListIdForAPI();
 
             // 유효성 검사 수행
 //            listValidator.validateReturnedLists(playlists, errors);
