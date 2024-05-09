@@ -24,7 +24,7 @@ public class MainController {
     private final YoutubeService youtubeService;
 
     //메인페이지 이동시
-    @GetMapping("/")
+    @GetMapping({"/", "/index"})
     public String getMain(@AuthMember Member member, Model model){
         //log.debug("아이디 >>> {}", member.getEmail());
         //본인의 유튜브 리스트 받아오기
@@ -37,11 +37,6 @@ public class MainController {
     @RequestMapping(value = {"/callback", "/Callback"}, method = RequestMethod.GET)
     public String handleCallback(HttpServletRequest request) {
         log.info("callback 함수 호출!!");
-        return "index";
-    }
-
-    @GetMapping("/index")
-    public String getIndex(HttpServletRequest request) {
         return "index";
     }
 
