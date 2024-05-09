@@ -22,6 +22,37 @@
             <link rel="stylesheet" href="/assets/css/slick.css">
             <link rel="stylesheet" href="/assets/css/nice-select.css">
             <link rel="stylesheet" href="/assets/fonts/style.css">
+        <style>
+            .logo{
+                width: 150px;
+                height: 36px;
+            }
+            /* 스타일링 */
+            .user-dropdown {
+                position: relative;
+                display: inline-block;
+            }
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: white; /* 하얀 배경 */
+                min-width: 120px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                border-radius: 5px; /* 모서리 둥글게 */
+                padding: 5px 0; /* 내부 여백 조정 */
+            }
+            .dropdown-content a {
+                color: green; /* 초록색 글자 */
+                padding: 10px 15px; /* 간격 조정 */
+                text-decoration: none;
+                display: block;
+                font-size: 14px; /* 글자 크기 조정 */
+            }
+            .dropdown-content a:hover {
+                background-color: #f2f2f2; /* 마우스 호버시 배경색 조정 */
+            }
+        </style>
    </head>
 
    <body>
@@ -47,24 +78,55 @@
                             <!-- Logo -->
                             <div class="col-xl-2 col-lg-2 col-md-1">
                                 <div class="logo">
-                                  <a href="index.html"><img src="/assets/img/logo/logo.png" alt=""></a>
+                                  <a href="/index"><img class="logo" src="/assets/img/logo/logo.png" alt=""></a>
                                 </div>
                             </div>
                             <div class="col-xl-10 col-lg-10 col-md-8">
                                 <!-- Main-menu -->
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>
-                                        <ul id="navigation">                                                                                                                                     
+                                        <ul id="navigation">
                                             <li><a href="index">Home</a></li>
-                                            <li><a href="about">About</a></li>
-                                            <li><a href="catagori">Catagories</a></li>
-                                            <li><a href="listing">Listing</a></li>
-                                            <li><a href="#">Page</a>
+                                            <!--<li><a href="about">About</a></li>
+                                            <li><a href="catagori">Catagories</a></li>-->
+                                            <!--<li><a href="listing">Listing</a></li>-->
+                                            <!--<li><a href="#">Page</a>
                                                 <ul class="submenu">
                                                     <li><a href="blog">Blog</a></li>
-                                                    <li><a href="blog_details">Blog Details</a></li>
+                                                    <li><a href="blog-details">Blog Details</a></li>
                                                     <li><a href="elements">Element</a></li>
-                                                    <li><a href="listing_details">Listing details</a></li>
+                                                    <li><a href="listing-details">Listing details</a></li>
+                                                </ul>
+                                            </li>-->
+                                            <li><a href="contact">Contact</a></li>
+                                            <!--<li class="add-list"><a href="listing-details"><i class="ti-plus"></i> add Listing</a></li>-->
+
+                                            <!-- <li class="login"><a href="login">
+                                                <i class="ti-user"></i> Sign in or Register</a>
+                                            </li>-->
+
+                                            <!-- 타임리프 템플릿을 사용하여 Spring Security 정보로 화면 제어 -->
+                                            <li class="login">
+                                                <!-- Spring Security의 인증 정보를 사용하여 로그인 상태에 따라 메시지 표시 -->
+                                                <div th:if="${#authorization.expression('isAuthenticated()')}">
+                                                    <!-- 인증된 사용자인 경우 -->
+                                                    <!-- 인증된 사용자 이름과 드롭다운 메뉴 -->
+                                                    <div class="user-dropdown" onclick="toggleDropdown()">
+                                                         <span style="color: blueviolet" th:text="'Welcome ' + ${#authentication.name}">
+                                                         </span>
+                                                        <i class="fas fa-caret-down" style="font-size: 1rem;"></i> <!-- Font Awesome 화살표 아이콘 -->
+                                                        <div class="dropdown-content" id="dropdownMenu">
+                                                            <a href="#" style="color: green;">정보 수정</a>
+                                                            <a href="/logout" style="color: green;">로그아웃</a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div th:unless="${#authorization.expression('isAuthenticated()')}">
+                                                    <!-- 인증되지 않은 사용자인 경우 -->
+                                                    <a href="/login"><i class="ti-user"></i> Sign in or Register</a>
+                                                </div>
+                                            </li>
                                                 </ul>
                                             </li>
                                             <li><a href="contact">Contact</a></li>
@@ -260,11 +322,11 @@
                                     <div class="col-xl-12">
                                         <div class="single-wrap d-flex justify-content-center">
                                             <nav aria-label="Page navigation example">
-                                                <ul class="pagination justify-content-start">
-                                                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                                                <ul class="pagination justify-content-start" id="paging_box">
+                                                   <!-- <li class="page-item active"><a class="page-link" href="#">01</a></li>
                                                     <li class="page-item"><a class="page-link" href="#">02</a></li>
                                                     <li class="page-item"><a class="page-link" href="#">03</a></li>
-                                                <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a></li>
+                                                <li class="page-item"><a class="page-link" href="javascript:nextPage()"><span class="ti-angle-right"></span></a></li>-->
                                                 </ul>
                                             </nav>
                                         </div>
@@ -284,14 +346,14 @@
         <!-- Footer Start-->
         <div class="footer-area">
             <div class="container">
-               <div class="footer-top footer-padding">
+                <div class="footer-top footer-padding">
                     <div class="row justify-content-between">
                         <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
                             <div class="single-footer-caption mb-50">
                                 <div class="single-footer-caption mb-30">
                                     <!-- logo -->
                                     <div class="footer-logo">
-                                        <a href="index.html"><img src="/assets/img/logo/logo2_footer.png" alt=""></a>
+                                        <a href="index"><img class="logo" src="/assets/img/logo/logo.png" alt=""></a>
                                     </div>
                                 </div>
                             </div>
@@ -301,15 +363,15 @@
                                 <div class="footer-tittle">
                                     <h4>Quick Link</h4>
                                     <ul>
-                                        <li><a href="#">Home</a></li>
-                                        <li><a href="#">Listing</a></li>
-                                        <li><a href="#">About</a></li>
+                                        <li><a href="/index">Home</a></li>
+                                        <!--<li><a href="#">Listing</a></li>-->
+                                        <!--<li><a href="#">About</a></li>-->
                                         <li><a href="#">Contact</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                        <!--<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
                             <div class="single-footer-caption mb-50">
                                 <div class="footer-tittle">
                                     <h4>Categories</h4>
@@ -317,31 +379,31 @@
                                         <li><a href="#">Reasonable Hotel</a></li>
                                         <li><a href="#">Popular Restaurant</a></li>
                                         <li><a href="#">Easy Shopping</a></li>
-                                        <li><a href="#">Night Life</a></li>     
+                                        <li><a href="#">Night Life</a></li>
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                             <div class="single-footer-caption mb-50">
                                 <div class="footer-tittle">
                                     <h4>Download App</h4>
                                     <ul>
-                                        <li class="app-log"><a href="#"><img src="/assets/img/gallery/app-logo.png" alt=""></a></li>
-                                        <li><a href="#"><img src="/assets/img/gallery/app-logo2.png" alt=""></a></li>
+                                        <li class="app-log"><a href="#" onclick="alert('출시 예정이니 잠시만 기다려주세요'); return false;"><img src="/assets/img/gallery/app-logo.png" alt=""></a></li>
+                                        <li><a href="#" onclick="alert('출시 예정이니 잠시만 기다려주세요'); return false;"><img src="/assets/img/gallery/app-logo2.png" alt=""></a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
-               </div>
+                </div>
                 <div class="footer-bottom">
                     <div class="row d-flex justify-content-between align-items-center">
                         <div class="col-xl-9 col-lg-8">
                             <div class="footer-copy-right">
                                 <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4">
@@ -354,7 +416,7 @@
                             </div>
                         </div>
                     </div>
-               </div>
+                </div>
             </div>
         </div>
         <!-- Footer End-->
@@ -398,183 +460,10 @@
 		<!-- Jquery Plugins, main Jquery -->	
         <script src="/assets/js/plugins.js"></script>
         <script src="/assets/js/main.js"></script>
-        <script>
-            let listTitle = [];
-            let listId = [];
-            let APIKey = 'AIzaSyB9elHDUCpcwAEcotBCdlZjm1jcNHThlKM';
-            let channelId = 'UCSQn6N6WVsutizfFCjmeTwA';
 
-            // IFrame Player API 코드 로드
-            var tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-            // YouTube IFrame Player API 로드가 완료되었을 때 호출되는 함수
-            function onYouTubeIframeAPIReady() {
-                let urlParameters = getUrlParameters();
-                let listId = urlParameters['listId'];
-                let listIdList = [];
-                listIdList.push(listId);
-                let accessTokenFromCookie = getAccessTokenFromCookie();
+        <script src="/js/listing.js"></script>
 
-                getVideos(APIKey, listIdList, accessTokenFromCookie);
-            }
-
-            /**
-             * 사용 X
-             * @param channelId
-             * @param APIKey
-             */
-            function getChannelLists(channelId, APIKey) {
-                $.ajax({
-                    type: "GET",
-                    url: "https://www.googleapis.com/youtube/v3/playlists",
-                    data: {
-                        part: "snippet",
-                        channelId: channelId,
-                        key: APIKey,
-                        type: "playlist",
-                        maxResults: 100,
-                    },
-                    success: function (response) {
-                        let playListLength = response.pageInfo.totalResults;
-                        for (let i = 0; i < playListLength; i++) {
-                            listTitle.push(response.items[i].snippet.title);
-                            listId.push(response.items[i].id);
-                        }
-                        console.log(listTitle);
-                        console.log(listId);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("AJAX Error:", error);
-                    }
-                });
-            }
-
-            // 플레이어가 준비되었을 때 호출되는 콜백 함수
-            function onPlayerReady(event) {
-                //event.target.playVideo();
-            }
-
-            function getUrlParameters() {
-                // 현재 URL을 가져오기
-                var currentUrl = window.location.href;
-
-                // URL에서 파라미터 부분만 추출하기
-                var paramsString = currentUrl.split('?')[1];
-
-                // 파라미터를 객체로 변환하기
-                var params = {};
-                paramsString.split('&').forEach(function(param) {
-                    var keyValue = param.split('=');
-                    params[keyValue[0]] = keyValue[1];
-                });
-
-                return params;
-            }
-
-            let videoId = [];
-            /**
-             * 임시 사용 나중에 JAVA로 변경예정
-             * @param APIKey
-             */
-            function getVideos(APIKey, listId, accessToken) {
-                videoId = [];
-                for (let i = 0; i < listId.length; i++) {
-                    $.ajax({
-                        type: "GET",
-                        url: "https://www.googleapis.com/youtube/v3/playlistItems",
-                        headers: {
-                            "Authorization": "Bearer " + accessToken
-                        },
-                        data: {
-                            part: "snippet",
-                            playlistId: listId[i],
-                            maxResults: 100
-                        },
-                        success: function(response) {
-                            let temp_listTitle = listTitle[i];
-                            console.log(temp_listTitle);
-                            for (let j = 0; j < response.items.length; j++) {
-                                videoId.push(response.items[j].snippet.resourceId.videoId);
-                            }
-                            console.log(videoId);
-
-                            // getVideos 함수의 모든 비동기 작업이 완료된 후에 createPlayers 함수를 호출합니다.
-                            if (i === listId.length - 1) {
-                                createPlayers(videoId);
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error("AJAX Error:", error);
-                        }
-                    });
-                }
-            }
-
-            // 동영상 플레이어 생성 함수
-            function createPlayers(videoIdList) {
-                // 동영상 ID 목록
-                //var videoIdList = ['cn9bS6OAWxY', 'opF3gIz7_v4', 'M7lc1UVf-VE']; // 동영상 ID를 여기에 추가하세요.
-
-                // 동영상 플레이어 컨테이너에 HTML 요소 추가
-                var playerContainer = document.getElementById('player-container');
-                for (var i = 0; i < videoIdList.length; i++) {
-                    var containerId = 'player' + (i + 1);
-                    var playerDiv = document.createElement('div');
-                    playerDiv.id = containerId;
-                    playerContainer.appendChild(playerDiv);
-                }
-
-                // 각 동영상 플레이어 생성
-                for (var i = 0; i < videoIdList.length; i++) {
-                    var containerId = 'player' + (i + 1);
-                    createYouTubePlayer(videoIdList[i], containerId);
-                }
-            }
-
-            // 동영상 플레이어를 생성하는 함수
-            function createYouTubePlayer(videoId, containerId) {
-                new YT.Player(containerId, {
-                    height: '360',
-                    width: '640',
-                    videoId: videoId,
-                    events: {
-                        'onReady': onPlayerReady,
-                        'onStateChange': onPlayerStateChange
-                    }
-                });
-            }
-
-            // 동영상 플레이어의 상태가 변경되었을 때 호출되는 함수
-            function onPlayerStateChange(event) {
-                if (event.data == YT.PlayerState.PLAYING && !done) {
-                    setTimeout(stopVideo, 6000);
-                    done = true;
-                }
-            }
-
-            // 동영상 정지 함수
-            function stopVideo() {
-                player.stopVideo();
-            }
-
-            // 쿠키에서 액세스 토큰 가져오기
-            function getAccessTokenFromCookie() {
-                var name = "access_token=";
-                var decodedCookie = decodeURIComponent(document.cookie);
-                var cookieArray = decodedCookie.split(';');
-                for (var i = 0; i < cookieArray.length; i++) {
-                    var cookie = cookieArray[i].trim();
-                    if (cookie.indexOf(name) == 0) {
-                        return cookie.substring(name.length, cookie.length);
-                    }
-                }
-                return null;
-            }
-
-        </script>
 
 
     </body>
