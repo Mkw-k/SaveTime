@@ -128,15 +128,12 @@ public class YoutubeService {
         //먼저 이미 있는 재생목록인지 확인 : 있으면 리스트에 넣고 건너뜀
         log.debug("이미 있는재생목록인지 확인 >>>");
         YoutubeList byListIdAndChannelId = youtubeListRepository.findByListIdAndChannelId(listId, channelId);
-
-        log.info("▶▶▶ getMyPlayListIdForAPI 6666 : findByListIdAndChannelId!");
-
         if(byListIdAndChannelId != null){
-            log.debug("▶▶▶ getMyPlayListIdForAPI 7777 : 있는 목록임!! >> ");
+            log.debug("있는 목록임!! >> ");
             YoutubeListDTO youtubeListDTO = modelMapper.map(byListIdAndChannelId, YoutubeListDTO.class);
             youtubeLists.add(youtubeListDTO);
         }else{
-            log.debug("▶▶▶ getMyPlayListIdForAPI 7777 : 없는 목록임!! >> ");
+            log.debug("없는 목록임!! >> ");
             // 저장 시도
             YoutubeList savedYoutubeList = youtubeListRepository.save(youtubeList);
             // 저장에 성공한 경우에만 리스트에 추가
@@ -270,10 +267,7 @@ public class YoutubeService {
      */
     public List<YoutubeListDTO> getMyPlayListIdForAPI() throws GeneralSecurityException, IOException {
         List<YoutubeListDTO> youtubeListDTOS = new ArrayList<>();
-        log.info("▶▶▶ getMyPlayListIdForAPI 1111");
-
         YouTube youtubeService = initializeYouTube();
-        log.info("▶▶▶ getMyPlayListIdForAPI 2222 인증완료");
 
         // 요청할 결과 수 설정
         int maxResults = 50; // 최대 10개의 플레이리스트 가져오기
@@ -283,12 +277,11 @@ public class YoutubeService {
 
         // 가져온 플레이리스트 목록 출력
         if (playlists != null) {
-            log.info("▶▶▶ getMyPlayListIdForAPI 5555 : 가져온 플레이리스트 목록 출력");
-            log.info("Total Playlists: " + playlists.size());
+            System.out.println("Total Playlists: " + playlists.size());
             for (Playlist playlist : playlists) {
-                log.info("Playlist ID: " + playlist.getId());
-                log.info("Playlist Title: " + playlist.getSnippet().getTitle());
-                log.info("----------------------------------------");
+                System.out.println("Playlist ID: " + playlist.getId());
+                System.out.println("Playlist Title: " + playlist.getSnippet().getTitle());
+                System.out.println("----------------------------------------");
 
                 DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
                 ZonedDateTime zonedDateTime = ZonedDateTime.parse(playlist.getSnippet().getPublishedAt().toString(), formatter);
@@ -306,10 +299,8 @@ public class YoutubeService {
                 saveDbAndAddList(youtubeListDTOS, playlist.getId(), playlist.getSnippet().getChannelId(), youtubeList);
             }
         } else {
-            log.info("No playlists found.");
+            System.out.println("No playlists found.");
         }
-
-        log.info("▶▶▶ getMyPlayListIdForAPI 8888 : 완료 성공!");
 
         return youtubeListDTOS;
     }
@@ -363,7 +354,6 @@ public class YoutubeService {
         request.setMaxResults((long) maxResults); // 요청할 최대 결과 수 설정
 
         PlaylistListResponse response = request.execute();
-        log.info("▶▶▶ getMyPlayListIdForAPI 3333 request.execute완료 ");
         return response.getItems();
     }
 
