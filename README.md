@@ -22,6 +22,7 @@
 유튜브
 - 유튜브 재생목록 불러오기
 - 유튜브 재생목록 검색
+
 - 유튜브 재생목록 상세 리스트
 - 유튜브 재생목록 상세 리스트 검색 (예정)
 
@@ -29,3 +30,17 @@
 - 회원관리 : 권한수정 등
 - 권한관리
 - 리소스관리
+
+### 재생목록 불러오기
+<img width="848" alt="재생목록 불러오기_1" src="https://github.com/Mkw-k/SaveTime/assets/71166672/b8865be2-0d37-45bc-beb2-614848971b77">
+<img width="729" alt="재생목록_불러오기_2" src="https://github.com/Mkw-k/SaveTime/assets/71166672/6e647472-8a03-4418-8030-faec59929f79">
+
+### 재생목록 상세
+<img width="288" alt="재생목록_상세_1" src="https://github.com/Mkw-k/SaveTime/assets/71166672/cb8fee53-98d3-4ab8-8381-7e3672d3c811">
+
+### 회원가입
+<img width="311" alt="회원가입_1" src="https://github.com/Mkw-k/SaveTime/assets/71166672/a3512507-9ac8-4e4b-8bca-0348a49e5f86">
+
+### 로그인
+<img width="293" alt="로그인_1" src="https://github.com/Mkw-k/SaveTime/assets/71166672/aa6640fa-b540-41a9-b47b-b765d710ab5d">
+
