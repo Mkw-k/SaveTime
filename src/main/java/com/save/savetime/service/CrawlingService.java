@@ -1,15 +1,7 @@
 package com.save.savetime.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.YouTubeRequestInitializer;
-import com.google.api.services.youtube.model.*;
-import com.save.savetime.model.dto.PlaylistDTO;
 import com.save.savetime.model.dto.YouTubeCrollingReqDTO;
-import com.save.savetime.model.dto.YouTubeCrollingRespDTO;
+import com.save.savetime.model.dto.YouTubeCrawlingRespDTO;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,16 +9,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.*;
 
+@Deprecated
 @Service
-public class CrollingService {
-    public Set<YouTubeCrollingRespDTO> getMyPlayList(YouTubeCrollingReqDTO crollingReqDTO) throws InterruptedException {
+public class CrawlingService {
+
+    @Deprecated
+    public Set<YouTubeCrawlingRespDTO> getMyPlayList(YouTubeCrollingReqDTO crollingReqDTO) throws InterruptedException {
         // 크롬 드라이버 설정
         System.setProperty("webdriver.chrome.driver", "./chromedriver.exe"); // 윈도우
         // System.setProperty("webdriver.chrome.driver", "./chromedriver"); // 리눅스, 맥
