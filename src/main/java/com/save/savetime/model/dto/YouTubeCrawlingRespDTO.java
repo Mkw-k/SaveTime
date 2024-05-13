@@ -3,7 +3,8 @@ package com.save.savetime.model.dto;
 import lombok.Data;
 
 @Data
-public class YouTubeCrollingRespDTO {
+@Deprecated
+public class YouTubeCrawlingRespDTO {
     private String videoName;
     private String videoUrl;
 }

@@ -1,18 +1,11 @@
 package com.save.savetime.service;
 
 import com.save.savetime.config.BaseTest;
-import com.save.savetime.model.dto.YouTubeCrollingReqDTO;
-import com.save.savetime.model.dto.YouTubeCrollingRespDTO;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Set;
 
 class CrollingServiceTest extends BaseTest {
     @Autowired
-    CrollingService crollingService;
+    CrawlingService crollingService;
 
     /*
     @Test
