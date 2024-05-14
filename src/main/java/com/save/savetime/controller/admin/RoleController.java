@@ -4,7 +4,6 @@ import com.save.savetime.model.dto.RoleDto;
 import com.save.savetime.model.entity.Role;
 import com.save.savetime.security.service.RoleService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +15,11 @@ import java.util.List;
 @Controller
 public class RoleController {
 
-	@Autowired
-	private RoleService roleService;
+	private final RoleService roleService;
+
+	public RoleController(RoleService roleService) {
+		this.roleService = roleService;
+	}
 
 	@GetMapping(value="/admin/roles")
 	public String getRoles(Model model) throws Exception {

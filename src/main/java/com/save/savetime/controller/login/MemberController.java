@@ -5,11 +5,10 @@ import com.save.savetime.model.dto.MemberAccount;
 import com.save.savetime.model.dto.UserDto;
 import com.save.savetime.model.dto.YoutubeListDTO;
 import com.save.savetime.model.entity.Member;
-import com.save.savetime.repository.RoleRepository;
 import com.save.savetime.service.MemberService;
 import com.save.savetime.service.YoutubeService;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,12 +24,17 @@ import java.security.Principal;
 import java.util.List;
 
 @Controller
-@RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
     private final YoutubeService youtubeService;
     private final PasswordEncoder passwordEncoder;
-    private final RoleRepository roleRepository;
+
+    @Autowired
+    public MemberController(MemberService memberService, YoutubeService youtubeService, PasswordEncoder passwordEncoder) {
+        this.memberService = memberService;
+        this.youtubeService = youtubeService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping(value = {"/certify/{mode}", "/certify/{mode}/{id}"})
     public String afterCertifyAction(HttpServletRequest request, Model model) throws Exception {

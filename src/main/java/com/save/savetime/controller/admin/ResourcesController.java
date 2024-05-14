@@ -4,7 +4,6 @@ package com.save.savetime.controller.admin;
 import com.save.savetime.model.dto.ResourcesDto;
 import com.save.savetime.model.entity.Resources;
 import com.save.savetime.model.entity.Role;
-import com.save.savetime.repository.RoleRepository;
 import com.save.savetime.security.metadatasource.UrlFilterInvocationSecurityMetadatsSource;
 import com.save.savetime.security.service.ResourcesService;
 import com.save.savetime.security.service.RoleService;
@@ -21,20 +20,20 @@ import java.util.List;
 @Controller
 public class ResourcesController {
 	
-	@Autowired
-	private ResourcesService resourcesService;
-
-	@Autowired
-	private RoleRepository roleRepository;
+	private final ResourcesService resourcesService;
 
 //	@Autowired
 //	MethodSecurityService methodSecurityService;
+	private final UrlFilterInvocationSecurityMetadatsSource urlFilterInvocationSecurityMetadatsSource;
+	private final RoleService roleService;
 
 	@Autowired
-	UrlFilterInvocationSecurityMetadatsSource urlFilterInvocationSecurityMetadatsSource;
+	public ResourcesController(ResourcesService resourcesService, UrlFilterInvocationSecurityMetadatsSource urlFilterInvocationSecurityMetadatsSource, RoleService roleService) {
+		this.resourcesService = resourcesService;
+		this.urlFilterInvocationSecurityMetadatsSource = urlFilterInvocationSecurityMetadatsSource;
+		this.roleService = roleService;
+	}
 
-	@Autowired
-	private RoleService roleService;
 
 	@GetMapping(value="/admin/resources")
 	public String getResources(Model model) throws Exception {

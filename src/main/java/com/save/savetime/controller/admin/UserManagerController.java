@@ -26,13 +26,16 @@ import java.util.Set;
 @Controller
 public class UserManagerController {
 	
-	@Autowired
-	private MemberService memberService;
+	private final MemberService memberService;
+	private final RoleService roleService;
+	private final RoleRepository roleRepository;
 
 	@Autowired
-	private RoleService roleService;
-	@Autowired
-	private RoleRepository roleRepository;
+	public UserManagerController(MemberService memberService, RoleService roleService, RoleRepository roleRepository) {
+		this.memberService = memberService;
+		this.roleService = roleService;
+		this.roleRepository = roleRepository;
+	}
 
 	@GetMapping(value={"/admin/accounts"})
 	public String getUsers(Model model) throws Exception {

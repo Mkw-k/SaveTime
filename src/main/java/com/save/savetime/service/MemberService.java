@@ -5,11 +5,10 @@ import com.save.savetime.model.entity.Member;
 import com.save.savetime.model.entity.Role;
 import com.save.savetime.repository.LoginRepository;
 import com.save.savetime.repository.RoleRepository;
-import com.save.savetime.security.service.RoleService;
 import com.save.savetime.util.ContextUtil;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,13 +24,18 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class MemberService {
 
     private final LoginRepository loginRepository;
     private final PasswordEncoder passwordEncoder;
-    private final RoleService roleService;
     private final  RoleRepository roleRepository;
+
+    @Autowired
+    public MemberService(LoginRepository loginRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+        this.loginRepository = loginRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
+    }
 
     public boolean afterCertifyAction(HttpServletRequest request) {
         log.debug("진입성공!!");
