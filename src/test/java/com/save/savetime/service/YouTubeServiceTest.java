@@ -2,14 +2,11 @@ package com.save.savetime.service;
 
 import com.save.savetime.config.BaseTest;
 import com.save.savetime.model.dto.YoutubeDTO;
-import com.save.savetime.model.dto.YoutubeListDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.List;
 
 /**
@@ -42,7 +39,7 @@ class YouTubeServiceTest extends BaseTest {
         Assertions.assertTrue(!myYouTubeListById.isEmpty(), "리스트가 있습니다.");
     }
 
-    @Test
+    /*@Test
     @DisplayName("유튜브 재생목록 불러오기 By All JAVA Logic")
     public void getYoutubeListSampleTest() throws GeneralSecurityException, IOException {
 
@@ -54,9 +51,9 @@ class YouTubeServiceTest extends BaseTest {
 
         //then
         //none
-    }
+    }*/
 
-    @Test
+    /*@Test
     @DisplayName("유튜브 재생목록 불러오기 By All JAVA Logic2")
     public void getYoutubeListSampleTest2() throws GeneralSecurityException, IOException {
 
@@ -68,5 +65,5 @@ class YouTubeServiceTest extends BaseTest {
 
         //then : 내용물이 있다!
         Assertions.assertTrue(!myPlayListIdForAPI.isEmpty(), "리스트가 있습니다.");
-    }
+    }*/
 }

@@ -4,7 +4,6 @@ import com.save.savetime.common.AuthMember;
 import com.save.savetime.model.dto.YoutubeListDTO;
 import com.save.savetime.model.entity.Member;
 import com.save.savetime.service.YoutubeService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +17,13 @@ import java.util.List;
 
 
 @Controller
-@RequiredArgsConstructor
 @Slf4j
 public class MainController {
     private final YoutubeService youtubeService;
+
+    public MainController(YoutubeService youtubeService) {
+        this.youtubeService = youtubeService;
+    }
 
     //메인페이지 이동시
     @GetMapping({"/", "/index"})

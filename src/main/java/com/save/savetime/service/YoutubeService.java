@@ -46,21 +46,25 @@ import java.util.stream.Collectors;
 @Transactional
 public class YoutubeService {
 
-    @Value("${youtube.url}")
-    private String YOUTUBE_API_URL;
-    @Value("${youtube.key}")
-    private static String YOUTUBE_API_KEY;
-    @Autowired
-    YoutubeListRepository youtubeListRepository;
-
-    @Autowired
-    private YoutubeUtils youtubeUtils;
+    private final String YOUTUBE_API_URL;
+    private final String YOUTUBE_API_KEY;
+    private final YoutubeListRepository youtubeListRepository;
+    private final YoutubeUtils youtubeUtils;
 
     private static YouTube youtube;
-
     private static final String APPLICATION_NAME = "SaveTime";
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
+    @Autowired
+    public YoutubeService(@Value("${youtube.url}") String youtubeApiUrl,
+                          @Value("${youtube.key}") String youtubeApiKey,
+                          YoutubeListRepository youtubeListRepository,
+                          YoutubeUtils youtubeUtils) {
+        this.YOUTUBE_API_URL = youtubeApiUrl;
+        this.YOUTUBE_API_KEY = youtubeApiKey;
+        this.youtubeListRepository = youtubeListRepository;
+        this.youtubeUtils = youtubeUtils;
+    }
 
 
     public List<YoutubeListDTO> getMyPlayListByYouTubeApiAndSaveDB(String token) throws Exception {

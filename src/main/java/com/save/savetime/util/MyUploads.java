@@ -1,4 +1,4 @@
-package com.save.savetime.service;
+package com.save.savetime.util;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;

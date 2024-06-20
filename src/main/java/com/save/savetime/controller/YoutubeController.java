@@ -9,8 +9,8 @@ import com.save.savetime.model.entity.YoutubeList;
 import com.save.savetime.repository.YoutubeListRepository;
 import com.save.savetime.service.YoutubeService;
 import com.save.savetime.validator.YoutubeListValidator;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,11 +29,17 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequestMapping("/youtube")
-@RequiredArgsConstructor
 public class YoutubeController {
     private final YoutubeService youTubeService;
     private final YoutubeListValidator listValidator;
     private final YoutubeListRepository youtubeListRepository;
+
+    @Autowired
+    public YoutubeController(YoutubeService youTubeService, YoutubeListValidator listValidator, YoutubeListRepository youtubeListRepository) {
+        this.youTubeService = youTubeService;
+        this.listValidator = listValidator;
+        this.youtubeListRepository = youtubeListRepository;
+    }
 
 
     @PostMapping
