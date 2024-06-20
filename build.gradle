@@ -66,7 +66,7 @@ dependencies {
 
     // Spring Security Test 의존성 추가
     testImplementation 'org.springframework.security:spring-security-test'
-    implementation 'ch.qos.logback:logback-classic:1.2.6'
+
 
 
     // Google API Client Library
@@ -88,6 +88,12 @@ dependencies {
     implementation 'com.google.oauth-client:google-oauth-client-jetty:1.20.0'
     implementation 'com.google.collections:google-collections:1.0'
 
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
+
+    // Logback과 SLF4J 호환 버전 설정
+    implementation 'ch.qos.logback:logback-classic:1.2.11'  // Logback 버전 1.2.11 사용
+    implementation 'ch.qos.logback:logback-core:1.2.11'
+    implementation 'org.slf4j:slf4j-api:1.7.36'             // SLF4J 버전 1.7.36 사용
 }
 
 tasks.named('test') {

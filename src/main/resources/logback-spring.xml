@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="info">
+    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>localhost:5000</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %5p %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Uncomment the file appender if needed -->
+    <!--
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <file>./logs/save-time.log</file>
+        <append>false</append>
+        <encoder>
+            <pattern>%d %5p %m%n</pattern>
+        </encoder>
+    </appender>
+    -->
+
+
+
+
+    <root level="info">
+        <appender-ref ref="console"/>
+        <appender-ref ref="logstash"/>
+        <!-- Uncomment the file appender if needed -->
+        <!-- <appender-ref ref="file"/> -->
+    </root>
+
+</configuration>
