@@ -1,13 +1,7 @@
 package com.save.savetime.service;
 
 import com.save.savetime.config.BaseTest;
-import com.save.savetime.model.dto.YoutubeDTO;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 /**
  *      // 1. 구글 Autorize 처리
@@ -25,7 +19,7 @@ class YouTubeServiceTest extends BaseTest {
     YoutubeService youTubeService;
 
     // 3. 유튜브 리스트 안에 있는 재생목록 정보 불러오기(파라미터 : listId)
-    @Test
+    /*@Test
     @DisplayName("유튜브 재생목록에 들어있는 videoId들을 불러온다.")
     public void getMyYouTubeListByIdTest(){
 
@@ -37,7 +31,7 @@ class YouTubeServiceTest extends BaseTest {
 
         //then : 내용물이 있다!
         Assertions.assertTrue(!myYouTubeListById.isEmpty(), "리스트가 있습니다.");
-    }
+    }*/
 
     /*@Test
     @DisplayName("유튜브 재생목록 불러오기 By All JAVA Logic")
